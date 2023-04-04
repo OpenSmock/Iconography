@@ -1,0 +1,80 @@
+Class {
+	#name : #MaterialDesignIcons4Library,
+	#superclass : #MaterialDesignIconsLibrary,
+	#category : #'OpenSmock-Iconography-Material Design'
+}
+
+{ #category : #accessing }
+MaterialDesignIcons4Library class >> cacheAll [
+	<script: 'self cacheAll. self current inspect.'>
+
+	| directory pngDir names |
+	directory := self new libraryDirectory ifNil:[ ^ nil ].
+	directory exists ifFalse:[ ^ nil ].
+	
+	pngDir := directory / 'png'.
+	pngDir exists ifFalse:[ ^ nil ].
+	
+	UIManager default showWaitCursorWhile:[
+		"first : count nb of icons"
+		names := Set new.
+		pngDir directories do:[ :d |
+			d directories do:[ :d2 | 
+				names add: d2 basename.
+			].
+		].
+	].
+
+	UIManager default informUserDuring: [ :bar | | nb size |
+		bar label: 'Caching icons...'.
+		nb := 1.
+		size := names size.
+		names asOrderedCollection do:[ :n |
+			bar label: 'Caching icon ', nb asString ,'/', names size asString.
+			self name: n.
+			nb := nb + 1.
+		].
+	].
+
+	
+]
+
+{ #category : #accessing }
+MaterialDesignIcons4Library class >> libraryName [
+
+	^ 'Material design icons 4.0.0'
+]
+
+{ #category : #initialization }
+MaterialDesignIcons4Library >> downloadFromDirectory: aDirectory [
+	"Download an icon from a directory"
+	
+	| pngDir |
+	self flag:'PLA : temporary, we get the default theme/size of the the icon'.
+	
+	pngDir := aDirectory / 'png'.
+	pngDir exists ifFalse:[ ^ nil ].
+	
+	pngDir directories do:[ :d |
+		d directories do:[ :d2 |
+			d2 	basename = self name ifTrue:[ | iconDir |
+				iconDir := d2 / 'materialicons' / '18dp' / '1x'.
+				iconDir exists ifTrue:[ | files form |
+					files := iconDir filesMatching: '*.png'.
+					files ifEmpty:[ ^ nil ].
+					form := self class current readPNGFrom: files first.
+					^ form
+				].
+			].
+		]
+	].
+	
+	^ nil
+]
+
+{ #category : #initialization }
+MaterialDesignIcons4Library >> initialize [
+
+	super initialize.
+	self libraryDirectory: SmockIconographySystemSettings materialDesignIcons4Directory
+]

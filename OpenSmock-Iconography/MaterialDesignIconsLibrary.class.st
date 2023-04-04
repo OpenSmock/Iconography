@@ -1,13 +1,13 @@
 Class {
 	#name : #MaterialDesignIconsLibrary,
 	#superclass : #SmockAbstractIconsLibrary,
-	#category : #'OpenSmock-Iconography-Core'
+	#category : #'OpenSmock-Iconography-Material Design'
 }
 
 { #category : #accessing }
 MaterialDesignIconsLibrary class >> defaultIconsLibraryClass [ 
 
-	^ MateriaDesignIcons4Library
+	^ MaterialDesignIcons4Library
 ]
 
 { #category : #accessing }

@@ -5,13 +5,26 @@ Class {
 		'name',
 		'style',
 		'scale',
-		'iconSize'
+		'iconSize',
+		'libraryDirectory'
 	],
 	#classInstVars : [
 		'Current'
 	],
 	#category : #'OpenSmock-Iconography-Core'
 }
+
+{ #category : #private }
+SmockAbstractIconsLibrary class >> _current [
+
+	^ Current
+]
+
+{ #category : #private }
+SmockAbstractIconsLibrary class >> _current: anObject [
+
+	Current := anObject
+]
 
 { #category : #cleanup }
 SmockAbstractIconsLibrary class >> cleanUp [
@@ -26,9 +39,9 @@ SmockAbstractIconsLibrary class >> cleanUp: anObject [
 ]
 
 { #category : #accessing }
-SmockAbstractIconsLibrary class >> current [ 
+SmockAbstractIconsLibrary class >> current [
 
-	^ Current ifNil: [ Current := self loadDefault ]
+	^ self defaultIconsLibraryClass _current ifNil: [ self defaultIconsLibraryClass loadDefault ]
 ]
 
 { #category : #private }
@@ -68,7 +81,9 @@ SmockAbstractIconsLibrary class >> loadDefault [
 	| themeIcons |
 	themeIcons := ThemeIcons named: self defaultIconsLibraryClass libraryName.
 	self defaultIconsLibraryClass installEmbeddedIconsOn: themeIcons.
-	^themeIcons
+	self _current: themeIcons.
+	
+	^ themeIcons
 ]
 
 { #category : #construction }
@@ -78,11 +93,23 @@ SmockAbstractIconsLibrary class >> name: aName [
 ]
 
 { #category : #construction }
+SmockAbstractIconsLibrary class >> name: aName style: aStyle [
+
+	^ self name: aName style: aStyle size: nil scale: nil
+]
+
+{ #category : #construction }
+SmockAbstractIconsLibrary class >> name: aName style: aStyle size: aSize [
+
+	^ self name: aName style: aStyle size: aSize scale: nil
+]
+
+{ #category : #construction }
 SmockAbstractIconsLibrary class >> name: aName style: aStyle size: aSize scale: aScale [
 	"Need to return a form"
 
 	| library |
-	library := self new.
+	library := self defaultIconsLibraryClass new.
 	library name: aName.
 	library style: aStyle.
 	library iconSize: aSize.
@@ -94,7 +121,7 @@ SmockAbstractIconsLibrary class >> name: aName style: aStyle size: aSize scale: 
 { #category : #construction }
 SmockAbstractIconsLibrary class >> reset [
 
-	Current := nil
+	self defaultIconsLibraryClass _current: nil
 ]
 
 { #category : #accessing }
@@ -103,12 +130,43 @@ SmockAbstractIconsLibrary >> buildSymbol [
 	^ self name asSymbol
 ]
 
+{ #category : #private }
+SmockAbstractIconsLibrary >> downloadFrom: isToCache [
+	"Download an icon and cache it if needed"
+	| form directory |
+
+	"first : local directory download"
+	directory := self libraryDirectory ifNil:[ ^ nil ].
+	directory exists ifFalse:[ ^ nil ].
+	form := self downloadFromDirectory: directory.
+		
+	(form notNil and:[isToCache]) ifTrue:[
+		self class installEmbeddedIcon: form name: self name in: self class current.
+	].
+	
+	^ form
+	
+]
+
+{ #category : #private }
+SmockAbstractIconsLibrary >> downloadFromDirectory: aDirectory [
+	"Download an icon from a directory"
+	
+	^ nil	
+]
+
 { #category : #icons }
 SmockAbstractIconsLibrary >> form [
 
 	| symbol form |
 	symbol := self buildSymbol.
 	form := self class current iconNamed: symbol.
+	
+	(form isNil or:[form == self class current notFound]) ifTrue:[ | downloadedForm |
+		downloadedForm := self downloadFrom: true.
+		^ downloadedForm ifNil:[ ^ form ]
+	].
+	
 	^ form
 ]
 
@@ -122,6 +180,18 @@ SmockAbstractIconsLibrary >> iconSize [
 SmockAbstractIconsLibrary >> iconSize: anObject [
 
 	iconSize := anObject
+]
+
+{ #category : #accessing }
+SmockAbstractIconsLibrary >> libraryDirectory [
+
+	^ libraryDirectory
+]
+
+{ #category : #accessing }
+SmockAbstractIconsLibrary >> libraryDirectory: anObject [
+
+	libraryDirectory := anObject
 ]
 
 { #category : #accessing }
