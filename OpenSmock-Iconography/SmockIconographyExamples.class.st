@@ -9,7 +9,7 @@ SmockIconographyExamples class >> exampleIcon [
 	<script:'self exampleIcon inspect'>
 	
 	| form |
-	form := SmockIcon name: #smockWorkshop.
+	form := SmockIconLibrary name: #smockWorkshop.
 	^ form
 ]
 
