@@ -1,2 +1,2 @@
 # Iconography
-Import, manage and get icons
+Import, manage, get and store/cache icons
