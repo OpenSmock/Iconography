@@ -1,5 +1,5 @@
 Class {
-	#name : #SmockAbstractIconLibrary,
+	#name : #SmockAbstractIconsLibrary,
 	#superclass : #Object,
 	#instVars : [
 		'name',
@@ -14,65 +14,71 @@ Class {
 }
 
 { #category : #cleanup }
-SmockAbstractIconLibrary class >> cleanUp [
+SmockAbstractIconsLibrary class >> cleanUp [
 
 	self allSubclassesDo: [ :c | c reset ]
 ]
 
 { #category : #cleanup }
-SmockAbstractIconLibrary class >> cleanUp: anObject [
+SmockAbstractIconsLibrary class >> cleanUp: anObject [
 
 	self cleanUp
 ]
 
 { #category : #accessing }
-SmockAbstractIconLibrary class >> current [ 
+SmockAbstractIconsLibrary class >> current [ 
 
 	^ Current ifNil: [ Current := self loadDefault ]
 ]
 
 { #category : #private }
-SmockAbstractIconLibrary class >> installEmbeddedIcon: aForm name: aName in: aThemeIcons [
+SmockAbstractIconsLibrary class >> defaultIconsLibraryClass [
+
+	^ self
+]
+
+{ #category : #private }
+SmockAbstractIconsLibrary class >> installEmbeddedIcon: aForm name: aName in: aThemeIcons [
 	
 	aThemeIcons icons at: aName put: aForm
 ]
 
 { #category : #private }
-SmockAbstractIconLibrary class >> installEmbeddedIconsOn: aThemeIcons [
+SmockAbstractIconsLibrary class >> installEmbeddedIconsOn: aThemeIcons [
 	"Install your embedded icons here to propose a ready to use set of icons"
 
 	"Example : self installEmbeddedIcon: aForm name: #myIcon in: aThemeIcons"
 ]
 
 { #category : #testing }
-SmockAbstractIconLibrary class >> isAbstract [
+SmockAbstractIconsLibrary class >> isAbstract [
 
 	^ true
 ]
 
 { #category : #accessing }
-SmockAbstractIconLibrary class >> libraryName [
+SmockAbstractIconsLibrary class >> libraryName [
 
-	^ nil
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
-SmockAbstractIconLibrary class >> loadDefault [
+SmockAbstractIconsLibrary class >> loadDefault [
 
 	| themeIcons |
-	themeIcons := ThemeIcons named: self libraryName.
-	self installEmbeddedIconsOn: themeIcons.
+	themeIcons := ThemeIcons named: self defaultIconsLibraryClass libraryName.
+	self defaultIconsLibraryClass installEmbeddedIconsOn: themeIcons.
 	^themeIcons
 ]
 
 { #category : #construction }
-SmockAbstractIconLibrary class >> name: aName [
+SmockAbstractIconsLibrary class >> name: aName [
 
 	^ self name: aName style: nil size: nil scale: nil
 ]
 
 { #category : #construction }
-SmockAbstractIconLibrary class >> name: aName style: aStyle size: aSize scale: aScale [
+SmockAbstractIconsLibrary class >> name: aName style: aStyle size: aSize scale: aScale [
 	"Need to return a form"
 
 	| library |
@@ -86,19 +92,19 @@ SmockAbstractIconLibrary class >> name: aName style: aStyle size: aSize scale: a
 ]
 
 { #category : #construction }
-SmockAbstractIconLibrary class >> reset [
+SmockAbstractIconsLibrary class >> reset [
 
 	Current := nil
 ]
 
 { #category : #accessing }
-SmockAbstractIconLibrary >> buildSymbol [
+SmockAbstractIconsLibrary >> buildSymbol [
 
 	^ self name asSymbol
 ]
 
 { #category : #icons }
-SmockAbstractIconLibrary >> form [
+SmockAbstractIconsLibrary >> form [
 
 	| symbol form |
 	symbol := self buildSymbol.
@@ -107,49 +113,49 @@ SmockAbstractIconLibrary >> form [
 ]
 
 { #category : #accessing }
-SmockAbstractIconLibrary >> iconSize [
+SmockAbstractIconsLibrary >> iconSize [
 
 	^ iconSize
 ]
 
 { #category : #accessing }
-SmockAbstractIconLibrary >> iconSize: anObject [
+SmockAbstractIconsLibrary >> iconSize: anObject [
 
 	iconSize := anObject
 ]
 
 { #category : #accessing }
-SmockAbstractIconLibrary >> name [
+SmockAbstractIconsLibrary >> name [
 
 	^ name
 ]
 
 { #category : #accessing }
-SmockAbstractIconLibrary >> name: anObject [
+SmockAbstractIconsLibrary >> name: anObject [
 
 	name := anObject
 ]
 
 { #category : #accessing }
-SmockAbstractIconLibrary >> scale [
+SmockAbstractIconsLibrary >> scale [
 
 	^ scale
 ]
 
 { #category : #accessing }
-SmockAbstractIconLibrary >> scale: anObject [
+SmockAbstractIconsLibrary >> scale: anObject [
 
 	scale := anObject
 ]
 
 { #category : #accessing }
-SmockAbstractIconLibrary >> style [
+SmockAbstractIconsLibrary >> style [
 
 	^ style
 ]
 
 { #category : #accessing }
-SmockAbstractIconLibrary >> style: anObject [
+SmockAbstractIconsLibrary >> style: anObject [
 
 	style := anObject
 ]

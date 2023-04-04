@@ -1,0 +1,58 @@
+"
+A SmockIconLibraryTest is a test class for testing the behavior of SmockIconLibrary
+"
+Class {
+	#name : #SmockIconsLibraryTest,
+	#superclass : #TestCase,
+	#category : #'OpenSmock-Iconography-Tests-Core'
+}
+
+{ #category : #tests }
+SmockIconsLibraryTest >> setUp [ 
+
+	super setUp.
+	SmockIconsLibrary reset.
+]
+
+{ #category : #tests }
+SmockIconsLibraryTest >> tearDown [  
+
+	super tearDown.
+	SmockIconsLibrary reset.
+]
+
+{ #category : #tests }
+SmockIconsLibraryTest >> testEmbeddedIcon [
+
+	| icon |
+	icon := SmockIconsLibrary name: #faviconSmockWorkshop.
+	self deny: icon identicalTo: (SmockIconsLibrary current notFound).
+]
+
+{ #category : #tests }
+SmockIconsLibraryTest >> testLibraryName [
+
+	self assert: SmockIconsLibrary libraryName equals: 'Smock'
+]
+
+{ #category : #tests }
+SmockIconsLibraryTest >> testNotFoundIcon [
+
+	self assert: (SmockIconsLibrary name: #test_NotFoundIcon) equals: (SmockIconsLibrary current notFound).
+]
+
+{ #category : #tests }
+SmockIconsLibraryTest >> testReset [
+
+	| themeIcons |
+	themeIcons := SmockIconsLibrary current.
+	SmockIconsLibrary reset.
+	
+	self deny: (SmockIconsLibrary current) identicalTo: themeIcons. 
+]
+
+{ #category : #tests }
+SmockIconsLibraryTest >> testSmockIconNamed [
+
+	self assert: (self smockIconNamed: #faviconSmockWorkshop) identicalTo: (SmockIconsLibrary name: #faviconSmockWorkshop)
+]
