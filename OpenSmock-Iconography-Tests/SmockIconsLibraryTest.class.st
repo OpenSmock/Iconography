@@ -26,7 +26,9 @@ SmockIconsLibraryTest >> testEmbeddedIcon [
 
 	| icon |
 	icon := SmockIconsLibrary name: #faviconSmockWorkshop.
-	self deny: icon identicalTo: (SmockIconsLibrary current notFound).
+	self
+		deny: icon
+		identicalTo: SmockIconsLibrary currentThemeIcons notFound
 ]
 
 { #category : #tests }
@@ -38,17 +40,21 @@ SmockIconsLibraryTest >> testLibraryName [
 { #category : #tests }
 SmockIconsLibraryTest >> testNotFoundIcon [
 
-	self assert: (SmockIconsLibrary name: #test_NotFoundIcon) equals: (SmockIconsLibrary current notFound).
+	self
+		assert: (SmockIconsLibrary name: #test_NotFoundIcon)
+		equals: SmockIconsLibrary currentThemeIcons notFound
 ]
 
 { #category : #tests }
 SmockIconsLibraryTest >> testReset [
 
 	| themeIcons |
-	themeIcons := SmockIconsLibrary current.
+	themeIcons := SmockIconsLibrary currentThemeIcons.
 	SmockIconsLibrary reset.
-	
-	self deny: (SmockIconsLibrary current) identicalTo: themeIcons. 
+
+	self
+		deny: SmockIconsLibrary currentThemeIcons
+		identicalTo: themeIcons
 ]
 
 { #category : #tests }

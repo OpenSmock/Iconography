@@ -5,8 +5,9 @@ Class {
 }
 
 { #category : #accessing }
-MaterialDesignIcons4Library class >> cacheAll [
-	<script: 'self cacheAll. self current inspect.'>
+MaterialDesignIcons4Library class >> cacheAllFilled [
+	"Warning : this action  can be long depending your file system and hardware and the quantity of icons (>1000)"
+	<script: 'self cacheAllFilled. self current inspect.'>
 
 	| directory pngDir names |
 	directory := self new libraryDirectory ifNil:[ ^ nil ].
@@ -48,27 +49,26 @@ MaterialDesignIcons4Library class >> libraryName [
 { #category : #initialization }
 MaterialDesignIcons4Library >> downloadFromDirectory: aDirectory [
 	"Download an icon from a directory"
-	
+
 	| pngDir |
-	self flag:'PLA : temporary, we get the default theme/size of the the icon'.
-	
-	pngDir := aDirectory / 'png'.
-	pngDir exists ifFalse:[ ^ nil ].
-	
-	pngDir directories do:[ :d |
-		d directories do:[ :d2 |
-			d2 	basename = self name ifTrue:[ | iconDir |
-				iconDir := d2 / 'materialicons' / '18dp' / '1x'.
-				iconDir exists ifTrue:[ | files form |
-					files := iconDir filesMatching: '*.png'.
-					files ifEmpty:[ ^ nil ].
-					form := self class current readPNGFrom: files first.
-					^ form
-				].
-			].
-		]
-	].
-	
+	self flag:
+		'PLA : temporary, we get the default theme/size of the the icon'.
+
+	pngDir := self pngDirectoryFrom: aDirectory.
+	pngDir exists ifFalse: [ ^ nil ].
+
+	pngDir directories do: [ :d |
+		d directories do: [ :d2 |
+			d2 basename = self name ifTrue: [
+				| iconDir |
+				iconDir := (self styleDirectoryFrom: d2) / '18dp' / '1x'.
+				iconDir exists ifTrue: [
+					| files form |
+					files := iconDir filesMatching: self pngExtensionFilter.
+					files ifEmpty: [ ^ nil ].
+					form := self class currentThemeIcons readPNGFrom: files first.
+					^ form ] ] ] ].
+
 	^ nil
 ]
 
@@ -76,5 +76,6 @@ MaterialDesignIcons4Library >> downloadFromDirectory: aDirectory [
 MaterialDesignIcons4Library >> initialize [
 
 	super initialize.
+	self style: MaterialDesignIconsStyle filled.
 	self libraryDirectory: SmockIconographySystemSettings materialDesignIcons4Directory
 ]

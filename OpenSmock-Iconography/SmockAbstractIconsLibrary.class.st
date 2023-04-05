@@ -9,21 +9,21 @@ Class {
 		'libraryDirectory'
 	],
 	#classInstVars : [
-		'Current'
+		'CurrentThemeIcons'
 	],
 	#category : #'OpenSmock-Iconography-Core'
 }
 
 { #category : #private }
-SmockAbstractIconsLibrary class >> _current [
+SmockAbstractIconsLibrary class >> _currentThemeIcons [
 
-	^ Current
+	^ CurrentThemeIcons
 ]
 
 { #category : #private }
-SmockAbstractIconsLibrary class >> _current: anObject [
+SmockAbstractIconsLibrary class >> _currentThemeIcons: anObject [
 
-	Current := anObject
+	CurrentThemeIcons := anObject
 ]
 
 { #category : #cleanup }
@@ -38,16 +38,51 @@ SmockAbstractIconsLibrary class >> cleanUp: anObject [
 	self cleanUp
 ]
 
+{ #category : #private }
+SmockAbstractIconsLibrary class >> createDefaultThemeIcons [
+
+	| themeIcons |
+	themeIcons := self createThemeIcons: self defaultIconsLibraryClass libraryName.
+	self defaultIconsLibraryClass installEmbeddedIconsOn: themeIcons.
+	self _currentThemeIcons: themeIcons.
+	
+	^ themeIcons
+]
+
+{ #category : #private }
+SmockAbstractIconsLibrary class >> createThemeIcons: aName [
+
+	| themeIcons |
+	themeIcons := ThemeIcons named: aName.
+	^ themeIcons
+]
+
 { #category : #accessing }
 SmockAbstractIconsLibrary class >> current [
 
-	^ self defaultIconsLibraryClass _current ifNil: [ self defaultIconsLibraryClass loadDefault ]
+	self deprecated: 'use new interface' transformWith: '`@receiver current' -> '`@receiver currentThemeIcons'.
+	^ self currentThemeIcons
+]
+
+{ #category : #accessing }
+SmockAbstractIconsLibrary class >> currentThemeIcons [
+
+	^ self defaultIconsLibraryClass _currentThemeIcons ifNil: [ self defaultIconsLibraryClass createDefaultThemeIcons ]
 ]
 
 { #category : #private }
 SmockAbstractIconsLibrary class >> defaultIconsLibraryClass [
 
 	^ self
+]
+
+{ #category : #installation }
+SmockAbstractIconsLibrary class >> installEmbeddedIcon: aForm name: aName [
+
+	self
+		installEmbeddedIcon: aForm
+		name: aName
+		in: self currentThemeIcons
 ]
 
 { #category : #private }
@@ -75,36 +110,25 @@ SmockAbstractIconsLibrary class >> libraryName [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
-SmockAbstractIconsLibrary class >> loadDefault [
-
-	| themeIcons |
-	themeIcons := ThemeIcons named: self defaultIconsLibraryClass libraryName.
-	self defaultIconsLibraryClass installEmbeddedIconsOn: themeIcons.
-	self _current: themeIcons.
-	
-	^ themeIcons
-]
-
-{ #category : #construction }
+{ #category : #icons }
 SmockAbstractIconsLibrary class >> name: aName [
 
 	^ self name: aName style: nil size: nil scale: nil
 ]
 
-{ #category : #construction }
+{ #category : #icons }
 SmockAbstractIconsLibrary class >> name: aName style: aStyle [
 
 	^ self name: aName style: aStyle size: nil scale: nil
 ]
 
-{ #category : #construction }
+{ #category : #icons }
 SmockAbstractIconsLibrary class >> name: aName style: aStyle size: aSize [
 
 	^ self name: aName style: aStyle size: aSize scale: nil
 ]
 
-{ #category : #construction }
+{ #category : #icons }
 SmockAbstractIconsLibrary class >> name: aName style: aStyle size: aSize scale: aScale [
 	"Need to return a form"
 
@@ -118,10 +142,10 @@ SmockAbstractIconsLibrary class >> name: aName style: aStyle size: aSize scale: 
 	^ library form
 ]
 
-{ #category : #construction }
+{ #category : #cleanup }
 SmockAbstractIconsLibrary class >> reset [
 
-	self defaultIconsLibraryClass _current: nil
+	self defaultIconsLibraryClass _currentThemeIcons: nil
 ]
 
 { #category : #accessing }
@@ -141,7 +165,7 @@ SmockAbstractIconsLibrary >> downloadFrom: isToCache [
 	form := self downloadFromDirectory: directory.
 		
 	(form notNil and:[isToCache]) ifTrue:[
-		self class installEmbeddedIcon: form name: self name in: self class current.
+		self class installEmbeddedIcon: form name: self name in: self themeIcons
 	].
 	
 	^ form
@@ -160,9 +184,9 @@ SmockAbstractIconsLibrary >> form [
 
 	| symbol form |
 	symbol := self buildSymbol.
-	form := self class current iconNamed: symbol.
+	form := self themeIcons iconNamed: symbol.
 	
-	(form isNil or:[form == self class current notFound]) ifTrue:[ | downloadedForm |
+	(form isNil or:[form == self themeIcons notFound]) ifTrue:[ | downloadedForm |
 		downloadedForm := self downloadFrom: true.
 		^ downloadedForm ifNil:[ ^ form ]
 	].
@@ -228,4 +252,10 @@ SmockAbstractIconsLibrary >> style [
 SmockAbstractIconsLibrary >> style: anObject [
 
 	style := anObject
+]
+
+{ #category : #accessing }
+SmockAbstractIconsLibrary >> themeIcons [
+
+	^ self class currentThemeIcons
 ]

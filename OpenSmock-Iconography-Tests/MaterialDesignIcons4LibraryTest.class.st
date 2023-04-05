@@ -24,13 +24,21 @@ MaterialDesignIcons4LibraryTest >> tearDown [
 { #category : #running }
 MaterialDesignIcons4LibraryTest >> testGetAndCacheIcon [
 	"You need to have a directory with the library unzipped inside"
+
 	| icon |
-	
-	self assert: (MaterialDesignIconsLibrary current iconNamed: #check) equals: MaterialDesignIconsLibrary current notFound.
-	
+	self
+		assert:
+		(MaterialDesignIconsLibrary currentThemeIcons iconNamed: #check)
+		equals: MaterialDesignIconsLibrary currentThemeIcons notFound.
+
 	icon := MaterialDesignIconsLibrary name: #check.
-	self deny: icon equals: MaterialDesignIconsLibrary current notFound.
-	self deny: (MaterialDesignIconsLibrary current iconNamed: #check) equals: MaterialDesignIconsLibrary current notFound.
+	self
+		deny: icon
+		equals: MaterialDesignIconsLibrary currentThemeIcons notFound.
+	self
+		deny:
+		(MaterialDesignIconsLibrary currentThemeIcons iconNamed: #check)
+		equals: MaterialDesignIconsLibrary currentThemeIcons notFound
 ]
 
 { #category : #running }
@@ -46,6 +54,13 @@ MaterialDesignIcons4LibraryTest >> testMaterialDesignIconNamed [
 ]
 
 { #category : #running }
+MaterialDesignIcons4LibraryTest >> testMaterialDesignIconNamedStyle [
+
+	self assert: (self materialDesignIconNamed: #check style: MaterialDesignIconsStyle filled) identicalTo: (MaterialDesignIconsLibrary name: #check).
+	self deny: (self materialDesignIconNamed: #check style: MaterialDesignIconsStyle outlined) identicalTo: (MaterialDesignIconsLibrary name: #check)
+]
+
+{ #category : #running }
 MaterialDesignIcons4LibraryTest >> testNameWithSymbolOrString [
 	"You need to have a directory with the library unzipped inside"
 	| iconA iconB |
@@ -58,15 +73,19 @@ MaterialDesignIcons4LibraryTest >> testNameWithSymbolOrString [
 { #category : #running }
 MaterialDesignIcons4LibraryTest >> testNotFoundIcon [
 
-	self assert: (MaterialDesignIconsLibrary name: #test_NotFoundIcon) equals: (MaterialDesignIconsLibrary current notFound).
+	self
+		assert: (MaterialDesignIconsLibrary name: #test_NotFoundIcon)
+		equals: MaterialDesignIconsLibrary currentThemeIcons notFound
 ]
 
 { #category : #running }
 MaterialDesignIcons4LibraryTest >> testReset [
 
 	| themeIcons |
-	themeIcons := MaterialDesignIconsLibrary current.
+	themeIcons := MaterialDesignIconsLibrary currentThemeIcons.
 	MaterialDesignIconsLibrary reset.
-	
-	self deny: (MaterialDesignIconsLibrary current) identicalTo: themeIcons. 
+
+	self
+		deny: MaterialDesignIconsLibrary currentThemeIcons
+		identicalTo: themeIcons
 ]

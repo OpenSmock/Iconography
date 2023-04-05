@@ -7,6 +7,12 @@ Object >> materialDesignIconNamed: aSymbol [
 ]
 
 { #category : #'*OpenSmock-Iconography' }
+Object >> materialDesignIconNamed: aSymbol style: aSymbol2 [
+
+	^ MaterialDesignIconsLibrary name: aSymbol style: aSymbol2
+]
+
+{ #category : #'*OpenSmock-Iconography' }
 Object >> smockIconNamed: aSymbol [
 
 	^ SmockIconsLibrary name: aSymbol
