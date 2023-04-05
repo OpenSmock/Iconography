@@ -36,6 +36,25 @@ MaterialDesignIconsLibrary name: #check.
 MaterialDesignIcons4Library name: #check.
 ```
 
+#### Choose a style
+
+Material Design 4 provide 5 icon styles : Filled (by default), Outlined, Rounded, Sharp and TwoTone.
+
+These style are enumerated in `MaterialDesignIconsStyle`.
+
+![image](https://user-images.githubusercontent.com/49183340/230070325-8eb61ff7-7037-449f-95df-b62bd82200f5.png)
+
+To use it :
+
+```smalltalk
+"from object method"
+self materialDesignIconNamed: #check_circle style: MaterialDesignIconsStyle filled. "returned by default"
+self materialDesignIconNamed: #check_circle style: MaterialDesignIconsStyle outlined.
+self materialDesignIconNamed: #check_circle style: MaterialDesignIconsStyle rounded.
+self materialDesignIconNamed: #check_circle style: MaterialDesignIconsStyle sharp.
+self materialDesignIconNamed: #check_circle style: MaterialDesignIconsStyle twoTone.
+```
+
 ## How to install
 
 ```smalltalk
