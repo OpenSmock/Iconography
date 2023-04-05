@@ -17,6 +17,12 @@ MaterialDesignIconsLibrary class >> defaultIconsLibraryClass [
 ]
 
 { #category : #accessing }
+MaterialDesignIconsLibrary class >> filledThemeIcons [
+
+	^ self currentThemeIcons
+]
+
+{ #category : #accessing }
 MaterialDesignIconsLibrary class >> libraryName [
 
 	^ 'Material design icons'
