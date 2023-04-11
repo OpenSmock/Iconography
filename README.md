@@ -3,7 +3,7 @@
 Import, manage, get and store/cache icons into libraries from standard icons libraries.
 
 Currently supported version : 
-- Material Design Icons 4.0.0
+- Material Design Icons 4.0.0 - https://github.com/google/material-design-icons
 
 This project wrap `ThemeIcons` to provide common icons libraries. Each asked icon is on-the-fly downloaded from library files and cached into the system to have an instant access.
 
