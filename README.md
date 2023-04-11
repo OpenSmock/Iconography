@@ -2,8 +2,12 @@
 
 Import, manage, get and store/cache icons into libraries from standard icons libraries.
 
-Currently supported version : 
+This project provide support of icons libraries (Material design icons, Awesome font icons, etc.). These libraries provide multiples icons `themes` and `styles`, with a lot a icons (more than thousands) and with multiples size and colorization for each ones. This project have to objective of easily offer a management of icons  and provide a simple way to use them. The other point is to provide a cache mecanism to get and cash only required Icons and not always load every thousands. 
+
+Currently supported libraries : 
 - Material Design Icons 4.0.0 - https://github.com/google/material-design-icons
+
+This project embed a `SmockIconsLibrary` used by us to store our projects icons, if you have your own icons you can implement you own library class.
 
 This project wrap `ThemeIcons` to provide common icons libraries. Each asked icon is on-the-fly downloaded from library files and cached into the system to have an instant access.
 
