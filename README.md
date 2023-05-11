@@ -17,6 +17,8 @@ This project wrap `ThemeIcons` to provide common icons libraries. Each asked ico
 
 ### Material Design Icons library
 
+To explore available icons this is here : https://fonts.google.com/icons
+
 Download icons package here : https://github.com/google/material-design-icons/releases/tag/4.0.0
 
 Unzip the archive in your computer : 
