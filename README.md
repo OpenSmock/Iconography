@@ -6,7 +6,7 @@ This project provide support of icons libraries (Material design icons, Ant Desi
 
 Currently supported libraries : 
 - Material Design Icons 4.0.0 - [https://github.com/google/material-design-icons](https://github.com/google/material-design-icons)
-- Ant Design Icons - [https://github.com/google/material-design-icons](https://github.com/ant-design/ant-design-icons)
+- Ant Design Icons - [https://github.com/ant-design/ant-design-icons](https://github.com/ant-design/ant-design-icons)
 
 This project embed a `SmockIconsLibrary` used by us to store our projects icons, if you have your own icons you can implement you own library class.
 
