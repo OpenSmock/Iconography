@@ -1,6 +1,6 @@
 # Iconography
 
-Import, manage, get and store/cache icons into libraries from standard icons libraries.
+Import, manage, get and store/cache icons into Pharo from standard icons libraries.
 
 This project provide support of icons libraries (Material design icons, Ant Design icons, Awesome font icons, etc.). These libraries provide multiples icons `themes` and `styles`, with a lot a icons (more than thousands) and with multiples size and colorization for each ones. This project have to objective of easily offer a management of icons  and provide a simple way to use them. The other point is to provide a cache mecanism to get and cash only required Icons and not always load every thousands. 
 
