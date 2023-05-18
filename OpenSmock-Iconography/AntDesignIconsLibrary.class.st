@@ -77,7 +77,7 @@ AntDesignIconsLibrary >> downloadAsVectorialFromDirectory: aDirectory [
 	files := iconDir filesMatching: self svgExtensionFilter.
 	files ifEmpty: [ ^ nil ].
 	
-	formattedName := self name asString translateToLowercase.
+	formattedName := self name asString copy translateToLowercase.
 	files do:[ :f | | fileName |
 		fileName := f basenameWithoutExtension translateToLowercase copyReplaceAll: '-' with: ''.
 		fileName = formattedName ifTrue:[

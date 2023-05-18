@@ -101,8 +101,7 @@ AntDesignIconsLibraryTest >> testAntDesignIconNamedStyle [
 { #category : #running }
 AntDesignIconsLibraryTest >> testGetAndCacheIcon [
 	| icon |
-	self flag:'You need to have a directory with the library unzipped inside. Try to make this file locally before the test (only this icon) to simulate the repository of the library'.
-	
+
 	self
 		assert:
 		(AntDesignIconsLibrary currentThemeIcons iconNamed: #checkCircle)
@@ -127,8 +126,6 @@ AntDesignIconsLibraryTest >> testLibraryName [
 { #category : #running }
 AntDesignIconsLibraryTest >> testNameWithSymbolOrString [
 	| iconA iconB |
-
-	self flag:'You need to have a directory with the library unzipped inside. Try to make this file locally before the test (only this icon) to simulate the repository of the library'.
 
 	iconA := AntDesignIconsLibrary name: 'checkSquare'.
 	iconB := AntDesignIconsLibrary name: #'checkSquare'.
