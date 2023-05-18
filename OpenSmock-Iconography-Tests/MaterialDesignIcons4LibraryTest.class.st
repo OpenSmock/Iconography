@@ -23,9 +23,10 @@ MaterialDesignIcons4LibraryTest >> tearDown [
 
 { #category : #running }
 MaterialDesignIcons4LibraryTest >> testGetAndCacheIcon [
-	"You need to have a directory with the library unzipped inside"
 
 	| icon |
+	self flag:'You need to have a directory with the library unzipped inside. Try to make this file locally before the test (only this icon) to simulate the repository of the library'.
+
 	self
 		assert:
 		(MaterialDesignIconsLibrary currentThemeIcons iconNamed: #check)
@@ -44,7 +45,7 @@ MaterialDesignIcons4LibraryTest >> testGetAndCacheIcon [
 { #category : #running }
 MaterialDesignIcons4LibraryTest >> testLibraryName [
 
-	self assert: MaterialDesignIcons4Library libraryName equals: 'Material design icons 4.0.0'
+	self assert: MaterialDesignIcons4Library libraryName equals: 'Material Design icons 4.0.0'
 ]
 
 { #category : #running }
@@ -62,11 +63,14 @@ MaterialDesignIcons4LibraryTest >> testMaterialDesignIconNamedStyle [
 
 { #category : #running }
 MaterialDesignIcons4LibraryTest >> testNameWithSymbolOrString [
-	"You need to have a directory with the library unzipped inside"
 	| iconA iconB |
+
+	self flag:'You need to have a directory with the library unzipped inside. Try to make this file locally before the test (only this icon) to simulate the repository of the library'.
+
 	iconA := MaterialDesignIconsLibrary name: 'view_day'.
 	iconB := MaterialDesignIconsLibrary name: #'view_day'.
 	
+	self deny: iconA equals: MaterialDesignIconsLibrary currentThemeIcons notFound.
 	self assert: iconA equals: iconB
 ]
 

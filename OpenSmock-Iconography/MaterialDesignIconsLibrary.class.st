@@ -7,7 +7,7 @@ Class {
 		'SharpThemeIcons',
 		'TwoToneThemeIcons'
 	],
-	#category : #'OpenSmock-Iconography-Material Design'
+	#category : #'OpenSmock-Iconography-Library - Material Design'
 }
 
 { #category : #accessing }
@@ -25,7 +25,7 @@ MaterialDesignIconsLibrary class >> filledThemeIcons [
 { #category : #accessing }
 MaterialDesignIconsLibrary class >> libraryName [
 
-	^ 'Material design icons'
+	^ 'Material Design icons'
 ]
 
 { #category : #accessing }
@@ -38,6 +38,7 @@ MaterialDesignIconsLibrary class >> outlinedThemeIcons [
 MaterialDesignIconsLibrary class >> reset [
 
 	super reset.
+	"Note : Filled is current theme"
 	OutlinedThemeIcons := nil.
 	RoundedThemeIcons := nil.
 	SharpThemeIcons := nil.
@@ -66,12 +67,6 @@ MaterialDesignIconsLibrary class >> twoToneThemeIcons [
 MaterialDesignIconsLibrary >> pngDirectoryFrom: aDirectory [
 
 	^ aDirectory / 'png'.
-]
-
-{ #category : #private }
-MaterialDesignIconsLibrary >> pngExtensionFilter [
-
-	^ '*png'
 ]
 
 { #category : #private }
