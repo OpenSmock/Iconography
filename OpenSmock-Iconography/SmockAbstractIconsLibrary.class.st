@@ -155,16 +155,16 @@ SmockAbstractIconsLibrary >> buildSymbol [
 ]
 
 { #category : #private }
-SmockAbstractIconsLibrary >> downloadFrom: isToCache [
-	"Download an icon and cache it if needed"
+SmockAbstractIconsLibrary >> downloadAsRaster: mustBeCached [
+	"Download an icon into a Form (raster image) and cache it if needed"
 	| form directory |
 
 	"first : local directory download"
 	directory := self libraryDirectory ifNil:[ ^ nil ].
 	directory exists ifFalse:[ ^ nil ].
-	form := self downloadFromDirectory: directory.
+	form := self downloadAsRasterFromDirectory: directory.
 		
-	(form notNil and:[isToCache]) ifTrue:[
+	(form notNil and:[mustBeCached]) ifTrue:[
 		self class installEmbeddedIcon: form name: self name in: self themeIcons
 	].
 	
@@ -173,8 +173,8 @@ SmockAbstractIconsLibrary >> downloadFrom: isToCache [
 ]
 
 { #category : #private }
-SmockAbstractIconsLibrary >> downloadFromDirectory: aDirectory [
-	"Download an icon from a directory"
+SmockAbstractIconsLibrary >> downloadAsRasterFromDirectory: aDirectory [
+	"Download an icon into a Form (raster image) from a directory"
 	
 	^ nil	
 ]
@@ -187,7 +187,7 @@ SmockAbstractIconsLibrary >> form [
 	form := self themeIcons iconNamed: symbol.
 	
 	(form isNil or:[form == self themeIcons notFound]) ifTrue:[ | downloadedForm |
-		downloadedForm := self downloadFrom: true.
+		downloadedForm := self downloadAsRaster: true.
 		^ downloadedForm ifNil:[ ^ form ]
 	].
 	
@@ -230,6 +230,12 @@ SmockAbstractIconsLibrary >> name: anObject [
 	name := anObject
 ]
 
+{ #category : #private }
+SmockAbstractIconsLibrary >> pngExtensionFilter [
+
+	^ '*png'
+]
+
 { #category : #accessing }
 SmockAbstractIconsLibrary >> scale [
 
@@ -252,6 +258,12 @@ SmockAbstractIconsLibrary >> style [
 SmockAbstractIconsLibrary >> style: anObject [
 
 	style := anObject
+]
+
+{ #category : #private }
+SmockAbstractIconsLibrary >> svgExtensionFilter [
+
+	^ '*svg'
 ]
 
 { #category : #accessing }

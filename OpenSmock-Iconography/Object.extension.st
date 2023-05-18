@@ -1,6 +1,42 @@
 Extension { #name : #Object }
 
 { #category : #'*OpenSmock-Iconography' }
+Object >> antDesignFilledIconNamed: aSymbol [
+
+	^ AntDesignIconsLibrary name: aSymbol style: AntDesignIconsStyle filled
+]
+
+{ #category : #'*OpenSmock-Iconography' }
+Object >> antDesignIconNamed: aSymbol [
+
+	^ AntDesignIconsLibrary name: aSymbol
+]
+
+{ #category : #'*OpenSmock-Iconography' }
+Object >> antDesignIconNamed: aSymbol style: aSymbol2 [
+
+	^ AntDesignIconsLibrary name: aSymbol style: aSymbol2
+]
+
+{ #category : #'*OpenSmock-Iconography' }
+Object >> antDesignOutlinedIconNamed: aSymbol [
+
+	^ AntDesignIconsLibrary name: aSymbol style: AntDesignIconsStyle outlined
+]
+
+{ #category : #'*OpenSmock-Iconography' }
+Object >> antDesignTwoToneIconNamed: aSymbol [
+
+	^ AntDesignIconsLibrary name: aSymbol style: AntDesignIconsStyle twoTone
+]
+
+{ #category : #'*OpenSmock-Iconography' }
+Object >> materialDesignFilledIconNamed: aSymbol [
+
+	^ MaterialDesignIconsLibrary name: aSymbol style: MaterialDesignIconsStyle filled
+]
+
+{ #category : #'*OpenSmock-Iconography' }
 Object >> materialDesignIconNamed: aSymbol [
 
 	^ MaterialDesignIconsLibrary name: aSymbol
@@ -10,6 +46,30 @@ Object >> materialDesignIconNamed: aSymbol [
 Object >> materialDesignIconNamed: aSymbol style: aSymbol2 [
 
 	^ MaterialDesignIconsLibrary name: aSymbol style: aSymbol2
+]
+
+{ #category : #'*OpenSmock-Iconography' }
+Object >> materialDesignOutlinedIconNamed: aSymbol [
+
+	^ MaterialDesignIconsLibrary name: aSymbol style: MaterialDesignIconsStyle outlined
+]
+
+{ #category : #'*OpenSmock-Iconography' }
+Object >> materialDesignRoundedIconNamed: aSymbol [
+
+	^ MaterialDesignIconsLibrary name: aSymbol style: MaterialDesignIconsStyle rounded
+]
+
+{ #category : #'*OpenSmock-Iconography' }
+Object >> materialDesignSharpNamed: aSymbol [
+
+	^ MaterialDesignIconsLibrary name: aSymbol style: MaterialDesignIconsStyle sharp
+]
+
+{ #category : #'*OpenSmock-Iconography' }
+Object >> materialDesignTwoToneNamed: aSymbol [
+
+	^ MaterialDesignIconsLibrary name: aSymbol style: MaterialDesignIconsStyle twoTone
 ]
 
 { #category : #'*OpenSmock-Iconography' }

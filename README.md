@@ -1,11 +1,12 @@
 # Iconography
 
-Import, manage, get and store/cache icons into libraries from standard icons libraries.
+Import, manage, get and store/cache icons into Pharo from standard icons libraries.
 
-This project provide support of icons libraries (Material design icons, Awesome font icons, etc.). These libraries provide multiples icons `themes` and `styles`, with a lot a icons (more than thousands) and with multiples size and colorization for each ones. This project have to objective of easily offer a management of icons  and provide a simple way to use them. The other point is to provide a cache mecanism to get and cash only required Icons and not always load every thousands. 
+This project provide support of icons libraries (Material design icons, Ant Design icons, Awesome font icons, etc.). These libraries provide multiples icons `themes` and `styles`, with a lot a icons (more than thousands) and with multiples size and colorization for each ones. This project have to objective of easily offer a management of icons  and provide a simple way to use them. The other point is to provide a cache mecanism to get and cash only required Icons and not always load every thousands. 
 
 Currently supported libraries : 
-- Material Design Icons 4.0.0 - https://github.com/google/material-design-icons
+- Material Design Icons 4.0.0 - [https://github.com/google/material-design-icons](https://github.com/google/material-design-icons)
+- Ant Design Icons - [https://github.com/ant-design/ant-design-icons](https://github.com/ant-design/ant-design-icons)
 
 This project embed a `SmockIconsLibrary` used by us to store our projects icons, if you have your own icons you can implement you own library class.
 
@@ -17,9 +18,9 @@ This project wrap `ThemeIcons` to provide common icons libraries. Each asked ico
 
 ### Material Design Icons library
 
-To explore available icons this is here : https://fonts.google.com/icons?icon.set=Material+Icons
+To explore available icons this is here : [https://fonts.google.com/icons?icon.set=Material+Icons](https://fonts.google.com/icons?icon.set=Material+Icons)
 
-Download icons package here : https://github.com/google/material-design-icons/releases/tag/4.0.0
+Download icons package here : [https://github.com/google/material-design-icons/releases/tag/4.0.0](https://github.com/google/material-design-icons/releases/tag/4.0.0)
 
 Unzip the archive in your computer : 
 
@@ -61,6 +62,36 @@ self materialDesignIconNamed: #check_circle style: MaterialDesignIconsStyle shar
 self materialDesignIconNamed: #check_circle style: MaterialDesignIconsStyle twoTone.
 ```
 
+### Ant Design Icons library
+
+To explore available icons this is here : [https://ant.design/components/icon](https://ant.design/components/icon)
+
+Download icons package here : [https://github.com/ant-design/ant-design-icons](https://github.com/ant-design/ant-design-icons)
+
+There are three different ways to get an icon :
+
+```smalltalk
+"from object method"
+self antDesignIconNamed: #checkCircle.
+
+"from class access method"
+AntDesignIconsLibrary name: #checkCircle.
+```
+#### Choose a style
+
+Ant Design provide 3 icon styles : Filled (by default), Outlined and TwoTone.
+
+These style are enumerated in `AntDesignIconsStyle`.
+
+To use it :
+
+```smalltalk
+"from object method"
+self antDesignIconNamed: #checkCircle style: AntDesignIconsStyle filled. "returned by default"
+self antDesignIconNamed: #checkCircle style: AntDesignIconsStyle outlined.
+self antDesignIconNamed: #checkCircle style: AntDesignIconsStyle twoTone.
+```
+
 ## How to install
 
 ```smalltalk
@@ -69,3 +100,6 @@ Metacello new
    repository: 'github://OpenSmock/Iconography:main';
    load.
 ```
+## Dependencies
+
+SVG Parser : [Athens-SVG](https://github.com/pharo-contributions/Athens-SVG)

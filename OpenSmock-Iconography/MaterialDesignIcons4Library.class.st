@@ -1,7 +1,7 @@
 Class {
 	#name : #MaterialDesignIcons4Library,
 	#superclass : #MaterialDesignIconsLibrary,
-	#category : #'OpenSmock-Iconography-Material Design'
+	#category : #'OpenSmock-Iconography-Library - Material Design'
 }
 
 { #category : #accessing }
@@ -43,16 +43,15 @@ MaterialDesignIcons4Library class >> cacheAllFilled [
 { #category : #accessing }
 MaterialDesignIcons4Library class >> libraryName [
 
-	^ 'Material design icons 4.0.0'
+	^ 'Material Design icons 4.0.0'
 ]
 
 { #category : #initialization }
-MaterialDesignIcons4Library >> downloadFromDirectory: aDirectory [
-	"Download an icon from a directory"
+MaterialDesignIcons4Library >> downloadAsRasterFromDirectory: aDirectory [
+	"Download an icon into a Form (raster image) from a directory"
 
 	| pngDir |
-	self flag:
-		'PLA : temporary, we get the default theme/size of the the icon'.
+	self flag:'labordep : temporary, we get the default theme/size of the the icon'.
 
 	pngDir := self pngDirectoryFrom: aDirectory.
 	pngDir exists ifFalse: [ ^ nil ].

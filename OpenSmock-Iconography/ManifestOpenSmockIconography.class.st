@@ -1,5 +1,6 @@
 "
-https://materialdesignicons.com/
+Material Design Icons : https://materialdesignicons.com
+Ant Design Icons : https://ant.design/components/icon
 "
 Class {
 	#name : #ManifestOpenSmockIconography,

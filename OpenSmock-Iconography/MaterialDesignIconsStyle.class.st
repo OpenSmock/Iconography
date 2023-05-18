@@ -1,7 +1,7 @@
 Class {
 	#name : #MaterialDesignIconsStyle,
 	#superclass : #Object,
-	#category : #'OpenSmock-Iconography-Material Design'
+	#category : #'OpenSmock-Iconography-Library - Material Design'
 }
 
 { #category : #enumerating }

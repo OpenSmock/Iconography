@@ -21,5 +21,8 @@ BaselineOfOpenSmockIconography >> baseline: spec [
 { #category : #baselines }
 BaselineOfOpenSmockIconography >> dependencies: spec [
 
-	"do nothing"
+	"Athens-SVG parser"
+	spec
+		baseline: 'AthensSVG'
+		with: [ spec repository: 'github://pharo-contributions/Athens-SVG/src' ].
 ]
