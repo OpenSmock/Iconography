@@ -22,3 +22,15 @@ SmockIconsLibrary class >> libraryName [
 
 	^ 'Smock'
 ]
+
+{ #category : #accessing }
+SmockIconsLibrary >> rasterImageFile [ 
+
+	^ nil
+]
+
+{ #category : #accessing }
+SmockIconsLibrary >> vectorialImageFile [ 
+
+	^ nil
+]

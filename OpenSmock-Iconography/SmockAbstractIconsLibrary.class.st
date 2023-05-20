@@ -139,7 +139,7 @@ SmockAbstractIconsLibrary class >> name: aName style: aStyle size: aSize scale: 
 	library iconSize: aSize.
 	library scale: aScale.
 
-	^ library form
+	^ library
 ]
 
 { #category : #cleanup }
@@ -152,6 +152,18 @@ SmockAbstractIconsLibrary class >> reset [
 SmockAbstractIconsLibrary >> buildSymbol [
 
 	^ self name asSymbol
+]
+
+{ #category : #testing }
+SmockAbstractIconsLibrary >> cachedForm [
+
+	| symbol form |
+	symbol := self buildSymbol.
+	form := self themeIcons iconNamed: symbol.
+	
+	form ifNil:[ ^ nil ].
+	form == self themeIcons notFound ifTrue:[ ^ nil ]. 
+	^ form
 ]
 
 { #category : #private }
@@ -179,19 +191,49 @@ SmockAbstractIconsLibrary >> downloadAsRasterFromDirectory: aDirectory [
 	^ nil	
 ]
 
+{ #category : #testing }
+SmockAbstractIconsLibrary >> exists [ 
+	"Test if the icon exists in the library, icon can be cached, not already cached but present in a file directory or available online"
+	
+	"First test : is icon already cached ?"
+	self isCachedForm ifTrue:[ ^ true ].
+	
+	"Second test : is icon on directory file ?"
+	((self rasterImageFile notNil and:[self rasterImageFile exists]) 
+		or:[(self vectorialImageFile notNil and:[self vectorialImageFile exists])]) ifTrue:[ ^ true ].
+
+	^ false
+]
+
 { #category : #icons }
 SmockAbstractIconsLibrary >> form [
 
-	| symbol form |
-	symbol := self buildSymbol.
-	form := self themeIcons iconNamed: symbol.
+	| downloadedForm |
+	self cachedForm ifNotNil:[ :form | ^ form ].
+	downloadedForm := self downloadAsRaster: true.
+	^ downloadedForm ifNil:[ self themeIcons notFound ]
+]
+
+{ #category : #export }
+SmockAbstractIconsLibrary >> formSerializationSelector [
+	"Return the selector in case of Form storage in a Class"
 	
-	(form isNil or:[form == self themeIcons notFound]) ifTrue:[ | downloadedForm |
-		downloadedForm := self downloadAsRaster: true.
-		^ downloadedForm ifNil:[ ^ form ]
-	].
+	| selector nameComposition stream |
 	
-	^ form
+	style := self style copy.
+	name := self name copy asString.
+	
+	"Clean - character and for each - set the next character as uppercase"
+	nameComposition := name findTokens: '_'.
+	
+	stream := ReadWriteStream on: String new.
+	stream nextPutAll: 'icon'.
+	nameComposition collect:[ :s | stream nextPutAll: s capitalized ].
+		
+	"build icon accessor"
+	style ifNotNil:[ :s | stream nextPutAll: s capitalized ].
+	
+	^ stream contents asValidSelector
 ]
 
 { #category : #accessing }
@@ -204,6 +246,16 @@ SmockAbstractIconsLibrary >> iconSize [
 SmockAbstractIconsLibrary >> iconSize: anObject [
 
 	iconSize := anObject
+]
+
+{ #category : #testing }
+SmockAbstractIconsLibrary >> isCachedForm [
+
+	| symbol form |
+	symbol := self buildSymbol.
+	form := self themeIcons iconNamed: symbol.
+	
+	^ (form notNil and:[form ~= self themeIcons notFound])
 ]
 
 { #category : #accessing }
@@ -237,6 +289,12 @@ SmockAbstractIconsLibrary >> pngExtensionFilter [
 ]
 
 { #category : #accessing }
+SmockAbstractIconsLibrary >> rasterImageFile [
+
+	^ self shouldBeImplemented
+]
+
+{ #category : #accessing }
 SmockAbstractIconsLibrary >> scale [
 
 	^ scale
@@ -246,6 +304,45 @@ SmockAbstractIconsLibrary >> scale [
 SmockAbstractIconsLibrary >> scale: anObject [
 
 	scale := anObject
+]
+
+{ #category : #export }
+SmockAbstractIconsLibrary >> serializeAsForm: aClass maxWidth: aMaxWidth maxHeight: aMaxHeight [
+	"Serialize an icon as a Form into a Class and return the generated selector"
+	
+	| selector writeStream form |
+	
+	aClass ifNil:[ ^ nil ].
+	(aMaxWidth isNil or:[aMaxWidth <= 0]) ifTrue:[ ^ nil ].
+	(aMaxHeight isNil or:[aMaxHeight <= 0]) ifTrue:[ ^ nil ].
+	self exists ifFalse:[ ^ nil ].
+
+	selector := (self formSerializationSelector asString, aMaxWidth asString, 'x', aMaxHeight asString) asValidSelector.
+	selector ifNil:[ ^ nil ].
+	
+	"Don't override existing accessor"
+	(aClass respondsTo: selector) ifTrue:[ ^ selector ].
+	
+	"Prepare Form"
+	form := self form.
+	form ifNil:[ ^ nil ].
+	form := form scaledToSize: aMaxWidth@aMaxHeight.
+	
+	writeStream := WriteStream on: String new.
+	
+	"Head"
+	writeStream nextPutAll: selector; crtab: 1.
+	writeStream nextPutAll: '<script: ''self '; nextPutAll: selector asString; nextPutAll: ' inspect''>'; crtab: 1. "add an inspect script"
+	writeStream nextPutAll: '"This method was generated with the Iconography project (https://github.com/OpenSmock/Iconography)."'; crtab: 1.
+	writeStream nextPutAll: '"This icon come from '; nextPutAll: (self class libraryName asString); nextPutAll: '"'. 
+	
+	"Body"
+	writeStream cr; crtab: 1; nextPutAll:'^ '.
+	form storeOn: writeStream.
+		
+	aClass class compile: writeStream contents classified: 'icons'.
+	
+	^ selector
 ]
 
 { #category : #accessing }
@@ -270,4 +367,10 @@ SmockAbstractIconsLibrary >> svgExtensionFilter [
 SmockAbstractIconsLibrary >> themeIcons [
 
 	^ self class currentThemeIcons
+]
+
+{ #category : #accessing }
+SmockAbstractIconsLibrary >> vectorialImageFile [
+
+	^ self shouldBeImplemented
 ]

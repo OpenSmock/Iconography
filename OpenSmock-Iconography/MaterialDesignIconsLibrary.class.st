@@ -93,3 +93,10 @@ MaterialDesignIconsLibrary >> themeIcons [
 
 	^ super themeIcons
 ]
+
+{ #category : #private }
+MaterialDesignIconsLibrary >> vectorialImageFile [
+	"Material Design vectorial image not yet implemented"
+
+	^ nil
+]

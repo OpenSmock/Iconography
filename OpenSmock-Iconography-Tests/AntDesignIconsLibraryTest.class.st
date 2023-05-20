@@ -59,7 +59,10 @@ AntDesignIconsLibraryTest >> createSampleIconFiles [
 		file writeStreamDo: [ :stream | stream nextPutAll: self class filledCheckSquareSVG ]; createFile.
 	].
 
+	directory := SmockIconographySystemSettings antDesignIconsDirectory.
 	directory := (directory / 'packages' / 'icons-svg' / 'svg' / 'outlined') ensureCreateDirectory.
+	
+	file := directory / 'check-circle.svg'.
 	file exists ifFalse:[
 		file writeStreamDo: [ :stream | stream nextPutAll: self class outlinedCheckCircleSVG ]; createFile.
 	].
@@ -71,88 +74,138 @@ AntDesignIconsLibraryTest >> createSampleIconFiles [
 ]
 
 { #category : #running }
+AntDesignIconsLibraryTest >> removeGeneratedMethods [ 
+
+	"remove generated methods"
+	SmockTestIconExport class removeSelector: #iconCheckCircleFilled32x32.
+	SmockTestIconExport class removeSelector: #iconCheckCircleFilled32x16.
+	SmockTestIconExport class removeSelector: #iconCheckCircleFilled16x16.
+]
+
+{ #category : #running }
 AntDesignIconsLibraryTest >> setUp [ 
 
 	super setUp.
 	AntDesignIconsLibrary reset.
 	self createSampleIconFiles.
+	
+	self removeGeneratedMethods.
 ]
 
 { #category : #running }
 AntDesignIconsLibraryTest >> tearDown [  
 
-	super tearDown.
+	self removeGeneratedMethods.
+	
 	AntDesignIconsLibrary reset.
+
+	super tearDown.
 ]
 
-{ #category : #running }
+{ #category : #tests }
 AntDesignIconsLibraryTest >> testAntDesignIconNamed [
 
-	self assert: (self antIconNamed: #checkCircle) identicalTo: (AntDesignIconsLibrary name: #checkCircle).
-	self assert: (self antFilledIconNamed: #checkCircle) identicalTo: (AntDesignIconsLibrary name: #checkCircle).
-	
-	self deny: (self antOutlinedIconNamed: #checkCircle) identicalTo: (AntDesignIconsLibrary name: #checkCircle).
-	self deny: (self antTwoToneIconNamed: #checkCircle) identicalTo: (AntDesignIconsLibrary name: #checkCircle).
+	self assert: (self antIconNamed: #checkCircle) identicalTo: (AntDesignIconsLibrary name: #checkCircle) form.
 ]
 
-{ #category : #running }
+{ #category : #tests }
 AntDesignIconsLibraryTest >> testAntDesignIconNamedStyle [
 
-	self assert: (self antIconNamed: #checkCircle style: #filled) identicalTo: (AntDesignIconsLibrary name: #checkCircle).
-	self assert: (self antIconNamed: #checkCircle style: AntDesignIconsStyle filled) identicalTo: (AntDesignIconsLibrary name: #checkCircle).
+	| filledCheckCircleIcon outlinedCheckCircleIcon |
+	filledCheckCircleIcon := (AntDesignIconsLibrary name: #checkCircle) form.
+
+	self assert: (self antFilledIconNamed: #checkCircle) identicalTo: filledCheckCircleIcon.
+	self assert: (self antIconNamed: #checkCircle style: #filled) identicalTo: filledCheckCircleIcon.
+	self assert: (self antIconNamed: #checkCircle style: AntDesignIconsStyle filled) identicalTo: filledCheckCircleIcon.
 	
-	self deny: (self antIconNamed: #checkCircle style: #outlined) identicalTo: (AntDesignIconsLibrary name: #checkCircle).
-	self deny: (self antIconNamed: #checkCircle style: AntDesignIconsStyle outlined) identicalTo: (AntDesignIconsLibrary name: #checkCircle).
+	self deny: (self antOutlinedIconNamed: #checkCircle) identicalTo: filledCheckCircleIcon.
+	self deny: (self antIconNamed: #checkCircle style: #outlined) identicalTo: filledCheckCircleIcon.
+	self deny: (self antIconNamed: #checkCircle style: AntDesignIconsStyle outlined) identicalTo: filledCheckCircleIcon.
 	
-	self deny: (self antIconNamed: #checkCircle style: #twoTone) identicalTo: (AntDesignIconsLibrary name: #checkCircle).
-	self deny: (self antIconNamed: #checkCircle style: AntDesignIconsStyle twoTone) identicalTo: (AntDesignIconsLibrary name: #checkCircle)
+	self deny: (self antTwoToneIconNamed: #checkCircle) identicalTo: filledCheckCircleIcon.
+	self deny: (self antIconNamed: #checkCircle style: #twoTone) identicalTo: filledCheckCircleIcon.
+	self deny: (self antIconNamed: #checkCircle style: AntDesignIconsStyle twoTone) identicalTo: filledCheckCircleIcon.
+	
+	outlinedCheckCircleIcon := (AntDesignIconsLibrary name: #checkCircle style: #outlined) form.
+	
+	self assert: (self antOutlinedIconNamed: #checkCircle) identicalTo: outlinedCheckCircleIcon.
+	self assert: (self antIconNamed: #checkCircle style: #outlined) identicalTo: outlinedCheckCircleIcon.
+	self assert: (self antIconNamed: #checkCircle style: AntDesignIconsStyle outlined) identicalTo: outlinedCheckCircleIcon.
 ]
 
-{ #category : #running }
+{ #category : #tests }
+AntDesignIconsLibraryTest >> testExists [
+
+	| iconDescription |
+	iconDescription := AntDesignIconsLibrary new.
+	iconDescription name: #checkCircle.
+	self assert: iconDescription exists.
+	
+	iconDescription := AntDesignIconsLibrary new.
+	iconDescription name: #checkCircleNotExists.
+	self deny: iconDescription exists.
+]
+
+{ #category : #tests }
 AntDesignIconsLibraryTest >> testGetAndCacheIcon [
 	| icon |
 
 	self
 		assert:
-		(AntDesignIconsLibrary currentThemeIcons iconNamed: #checkCircle)
+		(AntDesignIconsLibrary currentThemeIcons iconNamed: #checkCircle) form
 		equals: AntDesignIconsLibrary currentThemeIcons notFound.
 
-	icon := AntDesignIconsLibrary name: #checkCircle.
+	icon := (AntDesignIconsLibrary name: #checkCircle) form.
 	self
 		deny: icon
 		equals: AntDesignIconsLibrary currentThemeIcons notFound.
 	self
 		deny:
-		(AntDesignIconsLibrary currentThemeIcons iconNamed: #checkCircle)
+		(AntDesignIconsLibrary currentThemeIcons iconNamed: #checkCircle) form
 		equals: AntDesignIconsLibrary currentThemeIcons notFound
 ]
 
-{ #category : #running }
+{ #category : #tests }
 AntDesignIconsLibraryTest >> testLibraryName [
 
 	self assert: AntDesignIconsLibrary libraryName equals: 'Ant Design icons'
 ]
 
-{ #category : #running }
+{ #category : #tests }
 AntDesignIconsLibraryTest >> testNameWithSymbolOrString [
 	| iconA iconB |
 
-	iconA := AntDesignIconsLibrary name: 'checkSquare'.
-	iconB := AntDesignIconsLibrary name: #'checkSquare'.
+	iconA := (AntDesignIconsLibrary name: 'checkSquare') form.
+	iconB := (AntDesignIconsLibrary name: #'checkSquare') form.
 	
 	self deny: iconA equals: AntDesignIconsLibrary currentThemeIcons notFound.
 	self assert: iconA equals: iconB.
 ]
 
-{ #category : #running }
+{ #category : #tests }
 AntDesignIconsLibraryTest >> testNotFoundIcon [
 
 	self
-		assert: (AntDesignIconsLibrary name: #test_NotFoundIcon)
+		assert: (AntDesignIconsLibrary name: #test_NotFoundIcon) form
 		equals: AntDesignIconsLibrary currentThemeIcons notFound
 ]
 
-{ #category : #running }
+{ #category : #tests }
+AntDesignIconsLibraryTest >> testRasterImageFile [
+
+	| iconDescription file |
+	iconDescription := AntDesignIconsLibrary new.
+	iconDescription name: #checkCircle.
+	file := iconDescription rasterImageFile.
+	self assert: file isNil.
+
+	iconDescription := AntDesignIconsLibrary new.
+	iconDescription name: #checkCircleNotExists.
+	file := iconDescription vectorialImageFile.
+	self assert: file isNil.
+]
+
+{ #category : #tests }
 AntDesignIconsLibraryTest >> testReset [
 
 	| themeIcons |
@@ -162,4 +215,79 @@ AntDesignIconsLibraryTest >> testReset [
 	self
 		deny: AntDesignIconsLibrary currentThemeIcons
 		identicalTo: themeIcons
+]
+
+{ #category : #tests }
+AntDesignIconsLibraryTest >> testSerializeAsFormMaxWidthMaxHeight [
+	"Serialize an icon as a form into a test class"
+	| iconDescription symbol32x32 symbol16x16 form32x32 form16x16 controlForm32x32 |
+
+	iconDescription := AntDesignIconsLibrary new.
+	iconDescription name: #checkCircle.
+	
+	"test if the form is found before serialization"
+	self assert: iconDescription exists.
+	
+	"test if the class cannot contains the icon selector"
+	self deny: (SmockTestIconExport respondsTo: #iconCheckCircleFilled32x32).
+	self deny: (SmockTestIconExport respondsTo: #iconCheckCircleFilled16x16).
+	
+	"serialize into a test Class"
+	symbol32x32 := iconDescription serializeAsForm: SmockTestIconExport maxWidth: 32 maxHeight: 32.
+	self assert: symbol32x32 equals: #iconCheckCircleFilled32x32.
+	self assert: (SmockTestIconExport respondsTo: #iconCheckCircleFilled32x32).
+	
+	symbol16x16 := iconDescription serializeAsForm: SmockTestIconExport maxWidth: 16 maxHeight: 16.
+	self assert: symbol16x16 equals: #iconCheckCircleFilled16x16.
+	self assert: (SmockTestIconExport respondsTo: #iconCheckCircleFilled16x16).
+	
+	form32x32 := SmockTestIconExport perform: #iconCheckCircleFilled32x32.
+	self assert: (form32x32 isKindOf: Form).
+	self assert: form32x32 extent equals: (31@32).
+	
+	form16x16 := SmockTestIconExport perform: #iconCheckCircleFilled16x16.
+	self assert: (form16x16 isKindOf: Form).
+	self assert: form16x16 extent equals: (15@16).
+	
+	controlForm32x32 := SmockTestIconExport antDesign_iconCheckCircleFilled32x32ControlSample.
+	self assert: form32x32 bits equals: controlForm32x32 bits.
+	self deny: form16x16 bits equals: controlForm32x32 bits.
+]
+
+{ #category : #tests }
+AntDesignIconsLibraryTest >> testSerializeAsFormWidthAndHeightProportional [
+	"This class test the conservation of the proportionality of the size"
+	| iconDescription symbol form |
+
+	iconDescription := AntDesignIconsLibrary new.
+	iconDescription name: #checkCircle.
+	
+	"test if the class cannot contains the icon selector"
+	self deny: (SmockTestIconExport respondsTo: #iconCheckCircleFilled32x32).
+	
+	"serialize into a test Class"
+	symbol := iconDescription serializeAsForm: SmockTestIconExport maxWidth: 32 maxHeight: 16.
+	self assert: symbol equals: #iconCheckCircleFilled32x16.
+	self assert: (SmockTestIconExport respondsTo: #iconCheckCircleFilled32x16).
+
+	form := SmockTestIconExport perform: #iconCheckCircleFilled32x16.
+	self assert: (form isKindOf: Form).
+	self assert: form extent equals: (15@16).
+]
+
+{ #category : #tests }
+AntDesignIconsLibraryTest >> testVectorialImageFile [
+
+	| iconDescription file |
+	iconDescription := AntDesignIconsLibrary new.
+	iconDescription name: #checkCircle.
+	file := iconDescription vectorialImageFile.
+	self assert: file notNil.
+	self assert: file exists.
+	self assert: file basename equals: 'check-circle.svg'.
+
+	iconDescription := AntDesignIconsLibrary new.
+	iconDescription name: #checkCircleNotExists.
+	file := iconDescription vectorialImageFile.
+	self assert: file isNil.
 ]

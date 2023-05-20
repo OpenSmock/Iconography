@@ -7,14 +7,14 @@ Class {
 	#category : #'OpenSmock-Iconography-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : #running }
 SmockIconsLibraryTest >> setUp [ 
 
 	super setUp.
 	SmockIconsLibrary reset.
 ]
 
-{ #category : #tests }
+{ #category : #running }
 SmockIconsLibraryTest >> tearDown [  
 
 	super tearDown.
@@ -25,7 +25,7 @@ SmockIconsLibraryTest >> tearDown [
 SmockIconsLibraryTest >> testEmbeddedIcon [
 
 	| icon |
-	icon := SmockIconsLibrary name: #faviconSmockWorkshop.
+	icon := (SmockIconsLibrary name: #faviconSmockWorkshop) form.
 	self
 		deny: icon
 		identicalTo: SmockIconsLibrary currentThemeIcons notFound
@@ -41,7 +41,7 @@ SmockIconsLibraryTest >> testLibraryName [
 SmockIconsLibraryTest >> testNotFoundIcon [
 
 	self
-		assert: (SmockIconsLibrary name: #test_NotFoundIcon)
+		assert: (SmockIconsLibrary name: #test_NotFoundIcon) form
 		equals: SmockIconsLibrary currentThemeIcons notFound
 ]
 
@@ -60,5 +60,5 @@ SmockIconsLibraryTest >> testReset [
 { #category : #tests }
 SmockIconsLibraryTest >> testSmockIconNamed [
 
-	self assert: (self smockIconNamed: #faviconSmockWorkshop) identicalTo: (SmockIconsLibrary name: #faviconSmockWorkshop)
+	self assert: (self smockIconNamed: #faviconSmockWorkshop) identicalTo: ((SmockIconsLibrary name: #faviconSmockWorkshop) form)
 ]

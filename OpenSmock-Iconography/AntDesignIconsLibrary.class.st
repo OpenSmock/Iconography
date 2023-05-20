@@ -65,31 +65,15 @@ AntDesignIconsLibrary >> downloadAsRasterFromDirectory: aDirectory [
 AntDesignIconsLibrary >> downloadAsVectorialFromDirectory: aDirectory [
 	"Download an icon into a ASVGRoot (vectorial image) from a directory"
 
-	| svg fileContent svgDir iconDir files formattedName |
+	| svg fileContent file |
 	
-	"get the svg directory"
-	svgDir := self svgDirectoryFrom: aDirectory.
-	svgDir exists ifFalse: [ ^ nil ].
+	file := self vectorialImageFile.
+	(file isNil or:[file exists not]) ifTrue:[ ^ nil ].
 	
-	"localize icon into the style directory"
-	iconDir := (self styleDirectoryFrom: svgDir).
-	iconDir exists ifFalse:[ ^ nil ].
-	files := iconDir filesMatching: self svgExtensionFilter.
-	files ifEmpty: [ ^ nil ].
-	
-	formattedName := self name asString copy translateToLowercase.
-	files do:[ :f | | fileName |
-		fileName := f basenameWithoutExtension translateToLowercase copyReplaceAll: '-' with: ''.
-		fileName = formattedName ifTrue:[
-			"get the file content to parse it into a ASVGRoot"
-			fileContent := f contents.
-			svg := svgConverter importXMLDocument: (XMLDOMParser parse: fileContent).
-			^ svg	
-		].
-	].
-	
-	^ nil
-	
+	"get the file content to parse it into a ASVGRoot"
+	fileContent := file contents.
+	svg := svgConverter importXMLDocument: (XMLDOMParser parse: fileContent).
+	^ svg
 ]
 
 { #category : #accessing }
@@ -99,6 +83,12 @@ AntDesignIconsLibrary >> initialize [
 	self style: AntDesignIconsStyle filled.
 	self libraryDirectory: SmockIconographySystemSettings antDesignIconsDirectory.
 	svgConverter := AthensSVGConverter new.
+]
+
+{ #category : #accessing }
+AntDesignIconsLibrary >> rasterImageFile [ 
+	"Ant design not provide raster images"
+	^ nil
 ]
 
 { #category : #private }
@@ -126,4 +116,33 @@ AntDesignIconsLibrary >> themeIcons [
 	self style = AntDesignIconsStyle twoTone ifTrue:[^ self class twoToneThemeIcons].
 
 	^ super themeIcons
+]
+
+{ #category : #accessing }
+AntDesignIconsLibrary >> vectorialImageFile [ 
+	
+	| directory svgDir iconDir files formattedName |
+	directory := self libraryDirectory ifNil:[ ^ nil ].
+	directory exists ifFalse:[ ^ nil ].
+	
+	svgDir := self svgDirectoryFrom: directory.
+	svgDir exists ifFalse: [ ^ nil ].
+	
+	iconDir := (self styleDirectoryFrom: svgDir).
+	iconDir exists ifFalse:[ ^ nil ].
+	
+	files := iconDir filesMatching: self svgExtensionFilter.
+	files ifEmpty: [ ^ nil ].
+	
+	"format the icon name as a file name"
+	formattedName := self name asString copy translateToLowercase.
+	
+	files do:[ :f | | fileName |
+		fileName := f basenameWithoutExtension translateToLowercase copyReplaceAll: '-' with: ''.
+		fileName = formattedName ifTrue:[
+			^ f
+		].
+	].
+
+	^ nil
 ]
