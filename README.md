@@ -110,7 +110,15 @@ form := self materialIconNamed: #check_circle style: MaterialDesignIconsStyle tw
 
 To explore available icons this is here : [https://ant.design/components/icon](https://ant.design/components/icon)
 
-Download icons package here : [https://github.com/ant-design/ant-design-icons](https://github.com/ant-design/ant-design-icons)
+Download the code of the official github project as a ZIP (it contains the icons package) here : [https://github.com/ant-design/ant-design-icons](https://github.com/ant-design/ant-design-icons)
+
+Unzip the archive in your computer : 
+
+![image](https://github.com/labordep/Iconography/assets/49183340/1f2cabec-a8fc-42fb-b32a-d5ffddbcb051)
+
+Setup the directory with the unziped directoy with the dedicated settings section : 
+
+![image](https://github.com/labordep/Iconography/assets/49183340/c11d3a00-bad2-4e00-87f5-69ac64761b7b)
 
 There are three different ways to get an icon :
 
