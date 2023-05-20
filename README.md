@@ -10,6 +10,8 @@ Currently supported libraries :
 
 This project embed a `SmockIconsLibrary` used by us to store our projects icons, if you have your own icons you can implement you own library class.
 
+This project can be used to easily generate some icons sets for your project (see export/serialize section).
+
 This project wrap `ThemeIcons` to provide common icons libraries. Each asked icon is on-the-fly downloaded from library files and cached into the system to have an instant access.
 
 ![image](https://user-images.githubusercontent.com/49183340/229850382-7ec18735-7b97-42e8-bad6-83f0ce69d876.png)
