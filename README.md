@@ -44,6 +44,17 @@ form := self materialSharpIconNamed: #check_circle.
 form := self antOutlinedIconNamed: #checkCircle.
 ```
 
+### Export / Serialize icons
+
+To serialize icons into your project classes :
+
+```smalltalk
+iconDescription := AntDesignIconsLibrary new name: #checkCircle.
+iconDescription serializeAsForm: MyProjectClass maxWidth: 32 maxHeight: 32.
+```
+
+The icon is stored in `MyProjectClass` as a class method, the name of the generated method is returned by `SmockAbstractIconsLibrary>>serializeAsForm:maxWidth:maxHeight:`.
+
 ### Material Design Icons library
 
 ![image](https://github.com/labordep/Iconography/assets/49183340/b2ae4b81-d7f2-4950-af53-1a15d71a1c92)
