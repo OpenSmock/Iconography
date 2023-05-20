@@ -88,14 +88,24 @@ AntDesignIconsLibraryTest >> tearDown [
 { #category : #running }
 AntDesignIconsLibraryTest >> testAntDesignIconNamed [
 
-	self assert: (self antDesignIconNamed: #checkCircle) identicalTo: (AntDesignIconsLibrary name: #checkCircle)
+	self assert: (self antIconNamed: #checkCircle) identicalTo: (AntDesignIconsLibrary name: #checkCircle).
+	self assert: (self antFilledIconNamed: #checkCircle) identicalTo: (AntDesignIconsLibrary name: #checkCircle).
+	
+	self deny: (self antOutlinedIconNamed: #checkCircle) identicalTo: (AntDesignIconsLibrary name: #checkCircle).
+	self deny: (self antTwoToneIconNamed: #checkCircle) identicalTo: (AntDesignIconsLibrary name: #checkCircle).
 ]
 
 { #category : #running }
 AntDesignIconsLibraryTest >> testAntDesignIconNamedStyle [
 
-	self assert: (self antDesignIconNamed: #checkCircle style: AntDesignIconsStyle filled) identicalTo: (AntDesignIconsLibrary name: #checkCircle).
-	self deny: (self antDesignIconNamed: #checkCircle style: AntDesignIconsStyle outlined) identicalTo: (AntDesignIconsLibrary name: #checkCircle)
+	self assert: (self antIconNamed: #checkCircle style: #filled) identicalTo: (AntDesignIconsLibrary name: #checkCircle).
+	self assert: (self antIconNamed: #checkCircle style: AntDesignIconsStyle filled) identicalTo: (AntDesignIconsLibrary name: #checkCircle).
+	
+	self deny: (self antIconNamed: #checkCircle style: #outlined) identicalTo: (AntDesignIconsLibrary name: #checkCircle).
+	self deny: (self antIconNamed: #checkCircle style: AntDesignIconsStyle outlined) identicalTo: (AntDesignIconsLibrary name: #checkCircle).
+	
+	self deny: (self antIconNamed: #checkCircle style: #twoTone) identicalTo: (AntDesignIconsLibrary name: #checkCircle).
+	self deny: (self antIconNamed: #checkCircle style: AntDesignIconsStyle twoTone) identicalTo: (AntDesignIconsLibrary name: #checkCircle)
 ]
 
 { #category : #running }

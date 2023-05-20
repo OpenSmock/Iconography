@@ -1,73 +1,73 @@
 Extension { #name : #Object }
 
 { #category : #'*OpenSmock-Iconography' }
-Object >> antDesignFilledIconNamed: aSymbol [
+Object >> antFilledIconNamed: aSymbol [
 
 	^ AntDesignIconsLibrary name: aSymbol style: AntDesignIconsStyle filled
 ]
 
 { #category : #'*OpenSmock-Iconography' }
-Object >> antDesignIconNamed: aSymbol [
+Object >> antIconNamed: aSymbol [
 
 	^ AntDesignIconsLibrary name: aSymbol
 ]
 
 { #category : #'*OpenSmock-Iconography' }
-Object >> antDesignIconNamed: aSymbol style: aSymbol2 [
+Object >> antIconNamed: aSymbol style: aSymbol2 [
 
 	^ AntDesignIconsLibrary name: aSymbol style: aSymbol2
 ]
 
 { #category : #'*OpenSmock-Iconography' }
-Object >> antDesignOutlinedIconNamed: aSymbol [
+Object >> antOutlinedIconNamed: aSymbol [
 
 	^ AntDesignIconsLibrary name: aSymbol style: AntDesignIconsStyle outlined
 ]
 
 { #category : #'*OpenSmock-Iconography' }
-Object >> antDesignTwoToneIconNamed: aSymbol [
+Object >> antTwoToneIconNamed: aSymbol [
 
 	^ AntDesignIconsLibrary name: aSymbol style: AntDesignIconsStyle twoTone
 ]
 
 { #category : #'*OpenSmock-Iconography' }
-Object >> materialDesignFilledIconNamed: aSymbol [
+Object >> materialFilledIconNamed: aSymbol [
 
 	^ MaterialDesignIconsLibrary name: aSymbol style: MaterialDesignIconsStyle filled
 ]
 
 { #category : #'*OpenSmock-Iconography' }
-Object >> materialDesignIconNamed: aSymbol [
+Object >> materialIconNamed: aSymbol [
 
 	^ MaterialDesignIconsLibrary name: aSymbol
 ]
 
 { #category : #'*OpenSmock-Iconography' }
-Object >> materialDesignIconNamed: aSymbol style: aSymbol2 [
+Object >> materialIconNamed: aSymbol style: aSymbol2 [
 
 	^ MaterialDesignIconsLibrary name: aSymbol style: aSymbol2
 ]
 
 { #category : #'*OpenSmock-Iconography' }
-Object >> materialDesignOutlinedIconNamed: aSymbol [
+Object >> materialOutlinedIconNamed: aSymbol [
 
 	^ MaterialDesignIconsLibrary name: aSymbol style: MaterialDesignIconsStyle outlined
 ]
 
 { #category : #'*OpenSmock-Iconography' }
-Object >> materialDesignRoundedIconNamed: aSymbol [
+Object >> materialRoundedIconNamed: aSymbol [
 
 	^ MaterialDesignIconsLibrary name: aSymbol style: MaterialDesignIconsStyle rounded
 ]
 
 { #category : #'*OpenSmock-Iconography' }
-Object >> materialDesignSharpNamed: aSymbol [
+Object >> materialSharpIconNamed: aSymbol [
 
 	^ MaterialDesignIconsLibrary name: aSymbol style: MaterialDesignIconsStyle sharp
 ]
 
 { #category : #'*OpenSmock-Iconography' }
-Object >> materialDesignTwoToneNamed: aSymbol [
+Object >> materialTwoToneIconNamed: aSymbol [
 
 	^ MaterialDesignIconsLibrary name: aSymbol style: MaterialDesignIconsStyle twoTone
 ]
