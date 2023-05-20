@@ -148,26 +148,6 @@ SmockAbstractIconsLibrary class >> reset [
 	self defaultIconsLibraryClass _currentThemeIcons: nil
 ]
 
-{ #category : #export }
-SmockAbstractIconsLibrary >> asFormSerializationSelector [
-	"Return the selector in case of Form storage in a Class"
-	
-	| selector |
-	
-	style := self style.
-	name := self name.
-	
-	"build icon accessor"	
-	selector := name copy asString, (style ifNotNil:[ | formattedStyle | 
-		formattedStyle := style copy asString.
-		formattedStyle at: 1 put: (formattedStyle first asUppercase).
-		formattedStyle
-	]).
-	selector at: 1 put: (selector first asUppercase).
-
-	^ ('icon', selector) asValidSelector
-]
-
 { #category : #accessing }
 SmockAbstractIconsLibrary >> buildSymbol [
 
@@ -232,6 +212,28 @@ SmockAbstractIconsLibrary >> form [
 	self cachedForm ifNotNil:[ :form | ^ form ].
 	downloadedForm := self downloadAsRaster: true.
 	^ downloadedForm ifNil:[ self themeIcons notFound ]
+]
+
+{ #category : #export }
+SmockAbstractIconsLibrary >> formSerializationSelector [
+	"Return the selector in case of Form storage in a Class"
+	
+	| selector nameComposition stream |
+	
+	style := self style copy.
+	name := self name copy asString.
+	
+	"Clean - character and for each - set the next character as uppercase"
+	nameComposition := name findTokens: '_'.
+	
+	stream := ReadWriteStream on: String new.
+	stream nextPutAll: 'icon'.
+	nameComposition collect:[ :s | stream nextPutAll: s capitalized ].
+		
+	"build icon accessor"
+	style ifNotNil:[ :s | stream nextPutAll: s capitalized ].
+	
+	^ stream contents asValidSelector
 ]
 
 { #category : #accessing }
@@ -308,17 +310,37 @@ SmockAbstractIconsLibrary >> scale: anObject [
 SmockAbstractIconsLibrary >> serializeAsForm: aClass maxWidth: aMaxWidth maxHeight: aMaxHeight [
 	"Serialize an icon as a Form into a Class and return the generated selector"
 	
-	| selector |
+	| selector writeStream form |
 	
+	aClass ifNil:[ ^ nil ].
 	(aMaxWidth isNil or:[aMaxWidth <= 0]) ifTrue:[ ^ nil ].
 	(aMaxHeight isNil or:[aMaxHeight <= 0]) ifTrue:[ ^ nil ].
+	self exists ifFalse:[ ^ nil ].
 
-	selector := (self asFormSerializationSelector asString, aMaxWidth asString, 'x', aMaxHeight asString) asValidSelector.
+	selector := (self formSerializationSelector asString, aMaxWidth asString, 'x', aMaxHeight asString) asValidSelector.
+	selector ifNil:[ ^ nil ].
 	
 	"Don't override existing accessor"
 	(aClass respondsTo: selector) ifTrue:[ ^ selector ].
 	
-	self flag:'labordep : todo serialization here'.
+	"Prepare Form"
+	form := self form.
+	form ifNil:[ ^ nil ].
+	form := form scaledToSize: aMaxWidth@aMaxHeight.
+	
+	writeStream := WriteStream on: String new.
+	
+	"Head"
+	writeStream nextPutAll: selector; crtab: 1.
+	writeStream nextPutAll: '<script: ''self '; nextPutAll: selector asString; nextPutAll: ' inspect''>'; crtab: 1. "add an inspect script"
+	writeStream nextPutAll: '"This method was generated with the Iconography project (https://github.com/OpenSmock/Iconography)."'; crtab: 1.
+	writeStream nextPutAll: '"This icon come from '; nextPutAll: (self class libraryName asString); nextPutAll: '"'. 
+	
+	"Body"
+	writeStream cr; crtab: 1; nextPutAll:'^ '.
+	form storeOn: writeStream.
+		
+	aClass class compile: writeStream contents classified: 'icons'.
 	
 	^ selector
 ]

@@ -47,11 +47,22 @@ MaterialDesignIcons4LibraryTest >> createSampleIconFiles [
 ]
 
 { #category : #running }
+MaterialDesignIcons4LibraryTest >> removeGeneratedMethods [ 
+
+	"remove generated methods"
+	SmockTestIconExport class removeSelector: #iconCheckCircleFilled32x32.
+	SmockTestIconExport class removeSelector: #iconCheckCircleFilled32x16.
+	SmockTestIconExport class removeSelector: #iconCheckCircleFilled16x16.
+]
+
+{ #category : #running }
 MaterialDesignIcons4LibraryTest >> setUp [ 
 
 	super setUp.
 	MaterialDesignIcons4Library reset.
 	self createSampleIconFiles.
+	
+ 	self removeGeneratedMethods.
 ]
 
 { #category : #running }
@@ -59,6 +70,8 @@ MaterialDesignIcons4LibraryTest >> tearDown [
 
 	super tearDown.
 	MaterialDesignIcons4Library reset.
+	
+	self removeGeneratedMethods.
 ]
 
 { #category : #tests }
@@ -176,4 +189,41 @@ MaterialDesignIcons4LibraryTest >> testReset [
 	self
 		deny: MaterialDesignIconsLibrary currentThemeIcons
 		identicalTo: themeIcons
+]
+
+{ #category : #tests }
+MaterialDesignIcons4LibraryTest >> testSerializeAsFormMaxWidthMaxHeight [
+	"Serialize an icon as a form into a test class"
+	| iconDescription symbol32x32 symbol16x16 form32x32 form16x16 controlForm32x32 |
+
+	iconDescription := MaterialDesignIcons4Library new.
+	iconDescription name: #check_circle.
+	
+	"test if the form is found before serialization"
+	self assert: iconDescription exists.
+	
+	"test if the class cannot contains the icon selector"
+	self deny: (SmockTestIconExport respondsTo: #iconCheckCircleFilled32x32).
+	self deny: (SmockTestIconExport respondsTo: #iconCheckCircleFilled16x16).
+	
+	"serialize into a test Class"
+	symbol32x32 := iconDescription serializeAsForm: SmockTestIconExport maxWidth: 32 maxHeight: 32.
+	self assert: symbol32x32 equals: #iconCheckCircleFilled32x32.
+	self assert: (SmockTestIconExport respondsTo: #iconCheckCircleFilled32x32).
+	
+	symbol16x16 := iconDescription serializeAsForm: SmockTestIconExport maxWidth: 16 maxHeight: 16.
+	self assert: symbol16x16 equals: #iconCheckCircleFilled16x16.
+	self assert: (SmockTestIconExport respondsTo: #iconCheckCircleFilled16x16).
+	
+	form32x32 := SmockTestIconExport perform: #iconCheckCircleFilled32x32.
+	self assert: (form32x32 isKindOf: Form).
+	self assert: form32x32 extent equals: (32@32).
+	
+	form16x16 := SmockTestIconExport perform: #iconCheckCircleFilled16x16.
+	self assert: (form16x16 isKindOf: Form).
+	self assert: form16x16 extent equals: (16@16).
+	
+	controlForm32x32 := SmockTestIconExport materialDesign_iconCheckCircleFilled32x32ControlSample.
+	self assert: form32x32 bits equals: controlForm32x32 bits.
+	self deny: form16x16 bits equals: controlForm32x32 bits.
 ]
