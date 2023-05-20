@@ -67,16 +67,16 @@ MaterialDesignIcons4LibraryTest >> testGetAndCacheIcon [
 
 	self
 		assert:
-		(MaterialDesignIconsLibrary currentThemeIcons iconNamed: #check_circle)
+		(MaterialDesignIconsLibrary currentThemeIcons iconNamed: #check_circle) form
 		equals: MaterialDesignIconsLibrary currentThemeIcons notFound.
 
-	icon := MaterialDesignIconsLibrary name: #check_circle.
+	icon := (MaterialDesignIconsLibrary name: #check_circle) form.
 	self
 		deny: icon
 		equals: MaterialDesignIconsLibrary currentThemeIcons notFound.
 	self
 		deny:
-		(MaterialDesignIconsLibrary currentThemeIcons iconNamed: #check_circle)
+		(MaterialDesignIconsLibrary currentThemeIcons iconNamed: #check_circle) form
 		equals: MaterialDesignIconsLibrary currentThemeIcons notFound
 ]
 
@@ -89,40 +89,40 @@ MaterialDesignIcons4LibraryTest >> testLibraryName [
 { #category : #running }
 MaterialDesignIcons4LibraryTest >> testMaterialDesignIconNamed [
 
-	self assert: (self materialIconNamed: #check_circle) identicalTo: (MaterialDesignIconsLibrary name: #check_circle).
-	self assert: (self materialFilledIconNamed: #check_circle) identicalTo: (MaterialDesignIconsLibrary name: #check_circle).
+	self assert: (self materialIconNamed: #check_circle) identicalTo: (MaterialDesignIconsLibrary name: #check_circle) form.
+	self assert: (self materialFilledIconNamed: #check_circle) identicalTo: (MaterialDesignIconsLibrary name: #check_circle) form.
 	
-	self deny: (self materialOutlinedIconNamed: #check_circle) identicalTo: (MaterialDesignIconsLibrary name: #check_circle).
-	self deny: (self materialRoundedIconNamed: #check_circle) identicalTo: (MaterialDesignIconsLibrary name: #check_circle).
-	self deny: (self materialSharpIconNamed: #check_circle) identicalTo: (MaterialDesignIconsLibrary name: #check_circle).
-	self deny: (self materialTwoToneIconNamed: #check_circle) identicalTo: (MaterialDesignIconsLibrary name: #check_circle).
+	self deny: (self materialOutlinedIconNamed: #check_circle) identicalTo: (MaterialDesignIconsLibrary name: #check_circle) form.
+	self deny: (self materialRoundedIconNamed: #check_circle) identicalTo: (MaterialDesignIconsLibrary name: #check_circle) form.
+	self deny: (self materialSharpIconNamed: #check_circle) identicalTo: (MaterialDesignIconsLibrary name: #check_circle) form.
+	self deny: (self materialTwoToneIconNamed: #check_circle) identicalTo: (MaterialDesignIconsLibrary name: #check_circle) form.
 ]
 
 { #category : #running }
 MaterialDesignIcons4LibraryTest >> testMaterialDesignIconNamedStyle [
 
-	self assert: (self materialIconNamed: #check_circle style: #filled) identicalTo: (MaterialDesignIconsLibrary name: #check_circle).
-	self assert: (self materialIconNamed: #check_circle style: MaterialDesignIconsStyle filled) identicalTo: (MaterialDesignIconsLibrary name: #check_circle).
+	self assert: (self materialIconNamed: #check_circle style: #filled) identicalTo: (MaterialDesignIconsLibrary name: #check_circle) form.
+	self assert: (self materialIconNamed: #check_circle style: MaterialDesignIconsStyle filled) identicalTo: (MaterialDesignIconsLibrary name: #check_circle) form.
 	
-	self deny: (self materialIconNamed: #check_circle style: #outlined) identicalTo: (MaterialDesignIconsLibrary name: #check_circle).
-	self deny: (self materialIconNamed: #check_circle style: MaterialDesignIconsStyle outlined) identicalTo: (MaterialDesignIconsLibrary name: #check_circle).
+	self deny: (self materialIconNamed: #check_circle style: #outlined) identicalTo: (MaterialDesignIconsLibrary name: #check_circle) form.
+	self deny: (self materialIconNamed: #check_circle style: MaterialDesignIconsStyle outlined) identicalTo: (MaterialDesignIconsLibrary name: #check_circle) form.
 	
-	self deny: (self materialIconNamed: #check_circle style: #rounded) identicalTo: (MaterialDesignIconsLibrary name: #check_circle).
-	self deny: (self materialIconNamed: #check_circle style: MaterialDesignIconsStyle rounded) identicalTo: (MaterialDesignIconsLibrary name: #check_circle).
+	self deny: (self materialIconNamed: #check_circle style: #rounded) identicalTo: (MaterialDesignIconsLibrary name: #check_circle) form.
+	self deny: (self materialIconNamed: #check_circle style: MaterialDesignIconsStyle rounded) identicalTo: (MaterialDesignIconsLibrary name: #check_circle) form.
 	
-	self deny: (self materialIconNamed: #check_circle style: #sharp) identicalTo: (MaterialDesignIconsLibrary name: #check_circle).
-	self deny: (self materialIconNamed: #check_circle style: MaterialDesignIconsStyle sharp) identicalTo: (MaterialDesignIconsLibrary name: #check_circle).
+	self deny: (self materialIconNamed: #check_circle style: #sharp) identicalTo: (MaterialDesignIconsLibrary name: #check_circle) form.
+	self deny: (self materialIconNamed: #check_circle style: MaterialDesignIconsStyle sharp) identicalTo: (MaterialDesignIconsLibrary name: #check_circle) form.
 	
-	self deny: (self materialIconNamed: #check_circle style: #twoTone) identicalTo: (MaterialDesignIconsLibrary name: #check_circle).
-	self deny: (self materialIconNamed: #check_circle style: MaterialDesignIconsStyle twoTone) identicalTo: (MaterialDesignIconsLibrary name: #check_circle).
+	self deny: (self materialIconNamed: #check_circle style: #twoTone) identicalTo: (MaterialDesignIconsLibrary name: #check_circle) form.
+	self deny: (self materialIconNamed: #check_circle style: MaterialDesignIconsStyle twoTone) identicalTo: (MaterialDesignIconsLibrary name: #check_circle) form.
 ]
 
 { #category : #running }
 MaterialDesignIcons4LibraryTest >> testNameWithSymbolOrString [
 	| iconA iconB |
 
-	iconA := MaterialDesignIconsLibrary name: 'check_circle'.
-	iconB := MaterialDesignIconsLibrary name: #'check_circle'.
+	iconA := (MaterialDesignIconsLibrary name: 'check_circle') form.
+	iconB := (MaterialDesignIconsLibrary name: #'check_circle') form.
 	
 	self deny: iconA equals: MaterialDesignIconsLibrary currentThemeIcons notFound.
 	self assert: iconA equals: iconB
@@ -132,7 +132,7 @@ MaterialDesignIcons4LibraryTest >> testNameWithSymbolOrString [
 MaterialDesignIcons4LibraryTest >> testNotFoundIcon [
 
 	self
-		assert: (MaterialDesignIconsLibrary name: #test_NotExistingIcon)
+		assert: (MaterialDesignIconsLibrary name: #test_NotExistingIcon) form
 		equals: MaterialDesignIconsLibrary currentThemeIcons notFound
 ]
 

@@ -139,7 +139,7 @@ SmockAbstractIconsLibrary class >> name: aName style: aStyle size: aSize scale: 
 	library iconSize: aSize.
 	library scale: aScale.
 
-	^ library form
+	^ library
 ]
 
 { #category : #cleanup }
@@ -246,6 +246,11 @@ SmockAbstractIconsLibrary >> scale [
 SmockAbstractIconsLibrary >> scale: anObject [
 
 	scale := anObject
+]
+
+{ #category : #export }
+SmockAbstractIconsLibrary >> serializeAsForm: aClass [
+	"Serialize an icon as a Form into a Class"
 ]
 
 { #category : #accessing }
