@@ -1,5 +1,7 @@
 # Iconography
 
+![image](https://github.com/OpenSmock/Iconography/assets/49183340/836be8c3-6b11-4b49-90ac-d9a122cdbcab)
+
 Import, manage, get and store/cache icons into Pharo from standard icons libraries.
 
 This project provide support of icons libraries (Material design icons, Ant Design icons, Awesome font icons, etc.). These libraries provide multiples icons `themes` and `styles`, with a lot a icons (more than thousands) and with multiples size and colorization for each ones. This project have to objective of easily offer a management of icons  and provide a simple way to use them. The other point is to provide a cache mecanism to get and cash only required Icons and not always load every thousands. 
@@ -57,7 +59,7 @@ The icon is stored in `MyProjectClass` as a class method, the name of the genera
 
 ### Material Design Icons library
 
-![image](https://github.com/labordep/Iconography/assets/49183340/b2ae4b81-d7f2-4950-af53-1a15d71a1c92)
+![image](https://github.com/OpenSmock/Iconography/assets/49183340/bb69178c-6082-4068-92b5-bfcc8d4a5807)
 
 To explore available icons this is here : [https://fonts.google.com/icons?icon.set=Material+Icons](https://fonts.google.com/icons?icon.set=Material+Icons)
 
@@ -119,7 +121,7 @@ form := self materialIconNamed: #check_circle style: MaterialDesignIconsStyle tw
 
 ### Ant Design Icons library
 
-![image](https://github.com/labordep/Iconography/assets/49183340/a027ba73-fd06-4a06-9bb2-1da0e2e9f005)
+![image](https://github.com/OpenSmock/Iconography/assets/49183340/fab7aafa-dca3-4766-ac2a-25ba21707d48)
 
 To explore available icons this is here : [https://ant.design/components/icon](https://ant.design/components/icon)
 
