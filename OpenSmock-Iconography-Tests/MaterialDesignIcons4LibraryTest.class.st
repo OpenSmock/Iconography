@@ -61,7 +61,20 @@ MaterialDesignIcons4LibraryTest >> tearDown [
 	MaterialDesignIcons4Library reset.
 ]
 
-{ #category : #running }
+{ #category : #tests }
+MaterialDesignIcons4LibraryTest >> testExists [
+
+	| iconDescription |
+	iconDescription := MaterialDesignIcons4Library new.
+	iconDescription name: #check_circle.
+	self assert: iconDescription exists.
+	
+	iconDescription := MaterialDesignIcons4Library new.
+	iconDescription name: #check_circle_not_exists.
+	self deny: iconDescription exists.
+]
+
+{ #category : #tests }
 MaterialDesignIcons4LibraryTest >> testGetAndCacheIcon [
 	| icon |
 
@@ -80,13 +93,13 @@ MaterialDesignIcons4LibraryTest >> testGetAndCacheIcon [
 		equals: MaterialDesignIconsLibrary currentThemeIcons notFound
 ]
 
-{ #category : #running }
+{ #category : #tests }
 MaterialDesignIcons4LibraryTest >> testLibraryName [
 
 	self assert: MaterialDesignIcons4Library libraryName equals: 'Material Design icons 4.0.0'
 ]
 
-{ #category : #running }
+{ #category : #tests }
 MaterialDesignIcons4LibraryTest >> testMaterialDesignIconNamed [
 
 	self assert: (self materialIconNamed: #check_circle) identicalTo: (MaterialDesignIconsLibrary name: #check_circle) form.
@@ -98,7 +111,7 @@ MaterialDesignIcons4LibraryTest >> testMaterialDesignIconNamed [
 	self deny: (self materialTwoToneIconNamed: #check_circle) identicalTo: (MaterialDesignIconsLibrary name: #check_circle) form.
 ]
 
-{ #category : #running }
+{ #category : #tests }
 MaterialDesignIcons4LibraryTest >> testMaterialDesignIconNamedStyle [
 
 	self assert: (self materialIconNamed: #check_circle style: #filled) identicalTo: (MaterialDesignIconsLibrary name: #check_circle) form.
@@ -117,7 +130,7 @@ MaterialDesignIcons4LibraryTest >> testMaterialDesignIconNamedStyle [
 	self deny: (self materialIconNamed: #check_circle style: MaterialDesignIconsStyle twoTone) identicalTo: (MaterialDesignIconsLibrary name: #check_circle) form.
 ]
 
-{ #category : #running }
+{ #category : #tests }
 MaterialDesignIcons4LibraryTest >> testNameWithSymbolOrString [
 	| iconA iconB |
 
@@ -128,7 +141,7 @@ MaterialDesignIcons4LibraryTest >> testNameWithSymbolOrString [
 	self assert: iconA equals: iconB
 ]
 
-{ #category : #running }
+{ #category : #tests }
 MaterialDesignIcons4LibraryTest >> testNotFoundIcon [
 
 	self
@@ -136,7 +149,24 @@ MaterialDesignIcons4LibraryTest >> testNotFoundIcon [
 		equals: MaterialDesignIconsLibrary currentThemeIcons notFound
 ]
 
-{ #category : #running }
+{ #category : #tests }
+MaterialDesignIcons4LibraryTest >> testRasterImageFile [
+
+	| iconDescription file |
+	iconDescription := MaterialDesignIcons4Library new.
+	iconDescription name: #check_circle.
+	file := iconDescription rasterImageFile.
+	self assert: file notNil.
+	self assert: file exists.
+	self assert: file basename equals: 'baseline_check_circle_black_18dp.png'.
+
+	iconDescription := MaterialDesignIcons4Library new.
+	iconDescription name: #check_circle_not_exists.
+	file := iconDescription rasterImageFile.
+	self assert: file isNil.
+]
+
+{ #category : #tests }
 MaterialDesignIcons4LibraryTest >> testReset [
 
 	| themeIcons |

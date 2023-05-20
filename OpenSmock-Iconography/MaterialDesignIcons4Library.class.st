@@ -49,26 +49,13 @@ MaterialDesignIcons4Library class >> libraryName [
 { #category : #initialization }
 MaterialDesignIcons4Library >> downloadAsRasterFromDirectory: aDirectory [
 	"Download an icon into a Form (raster image) from a directory"
+	| file form |
 
-	| pngDir |
-	self flag:'labordep : temporary, we get the default theme/size of the the icon'.
+	file := self rasterImageFile.
+	(file isNil or:[file exists not]) ifTrue:[ ^ nil ].
 
-	pngDir := self pngDirectoryFrom: aDirectory.
-	pngDir exists ifFalse: [ ^ nil ].
-
-	pngDir directories do: [ :d |
-		d directories do: [ :d2 |
-			d2 basename = self name ifTrue: [
-				| iconDir |
-				iconDir := (self styleDirectoryFrom: d2) / '18dp' / '1x'.
-				iconDir exists ifTrue: [
-					| files form |
-					files := iconDir filesMatching: self pngExtensionFilter.
-					files ifEmpty: [ ^ nil ].
-					form := self class currentThemeIcons readPNGFrom: files first.
-					^ form ] ] ] ].
-
-	^ nil
+	form := self class currentThemeIcons readPNGFrom: file.
+	^ form
 ]
 
 { #category : #initialization }
@@ -77,4 +64,33 @@ MaterialDesignIcons4Library >> initialize [
 	super initialize.
 	self style: MaterialDesignIconsStyle filled.
 	self libraryDirectory: SmockIconographySystemSettings materialDesignIcons4Directory
+]
+
+{ #category : #initialization }
+MaterialDesignIcons4Library >> rasterImageFile [ 
+	| pngDir directory |
+	self flag:'labordep : temporary, we get the default scale and size of the the icon'.
+
+	directory := self libraryDirectory ifNil:[ ^ nil ].
+	directory exists ifFalse:[ ^ nil ].
+
+	pngDir := self pngDirectoryFrom: directory.
+	pngDir exists ifFalse: [ ^ nil ].
+
+	pngDir directories do: [ :d |
+		d directories do: [ :d2 |
+			d2 basename = self name ifTrue: [
+				| iconDir |
+				iconDir := (self styleDirectoryFrom: d2) / '18dp' / '1x'.
+				iconDir exists ifTrue: [
+					| files |
+					files := iconDir filesMatching: self pngExtensionFilter.
+					files ifEmpty: [ ^ nil ].
+					^ files first 
+				] 
+			] 
+		] 
+	].
+
+	^ nil
 ]

@@ -7,14 +7,14 @@ Class {
 	#category : #'OpenSmock-Iconography-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : #running }
 SmockGeneralIconsLibraryTest >> setUp [ 
 
 	super setUp.
 	SmockTestIconsLibrary reset.
 ]
 
-{ #category : #tests }
+{ #category : #running }
 SmockGeneralIconsLibraryTest >> tearDown [ 
 
 	super tearDown.

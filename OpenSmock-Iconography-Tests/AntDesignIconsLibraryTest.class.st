@@ -59,7 +59,10 @@ AntDesignIconsLibraryTest >> createSampleIconFiles [
 		file writeStreamDo: [ :stream | stream nextPutAll: self class filledCheckSquareSVG ]; createFile.
 	].
 
+	directory := SmockIconographySystemSettings antDesignIconsDirectory.
 	directory := (directory / 'packages' / 'icons-svg' / 'svg' / 'outlined') ensureCreateDirectory.
+	
+	file := directory / 'check-circle.svg'.
 	file exists ifFalse:[
 		file writeStreamDo: [ :stream | stream nextPutAll: self class outlinedCheckCircleSVG ]; createFile.
 	].
@@ -85,30 +88,51 @@ AntDesignIconsLibraryTest >> tearDown [
 	AntDesignIconsLibrary reset.
 ]
 
-{ #category : #running }
+{ #category : #tests }
 AntDesignIconsLibraryTest >> testAntDesignIconNamed [
 
 	self assert: (self antIconNamed: #checkCircle) identicalTo: (AntDesignIconsLibrary name: #checkCircle) form.
-	self assert: (self antFilledIconNamed: #checkCircle) identicalTo: (AntDesignIconsLibrary name: #checkCircle) form.
-	
-	self deny: (self antOutlinedIconNamed: #checkCircle) identicalTo: (AntDesignIconsLibrary name: #checkCircle) form.
-	self deny: (self antTwoToneIconNamed: #checkCircle) identicalTo: (AntDesignIconsLibrary name: #checkCircle) form.
 ]
 
-{ #category : #running }
+{ #category : #tests }
 AntDesignIconsLibraryTest >> testAntDesignIconNamedStyle [
 
-	self assert: (self antIconNamed: #checkCircle style: #filled) identicalTo: (AntDesignIconsLibrary name: #checkCircle) form.
-	self assert: (self antIconNamed: #checkCircle style: AntDesignIconsStyle filled) identicalTo: (AntDesignIconsLibrary name: #checkCircle) form.
+	| filledCheckCircleIcon outlinedCheckCircleIcon |
+	filledCheckCircleIcon := (AntDesignIconsLibrary name: #checkCircle) form.
+
+	self assert: (self antFilledIconNamed: #checkCircle) identicalTo: filledCheckCircleIcon.
+	self assert: (self antIconNamed: #checkCircle style: #filled) identicalTo: filledCheckCircleIcon.
+	self assert: (self antIconNamed: #checkCircle style: AntDesignIconsStyle filled) identicalTo: filledCheckCircleIcon.
 	
-	self deny: (self antIconNamed: #checkCircle style: #outlined) identicalTo: (AntDesignIconsLibrary name: #checkCircle) form.
-	self deny: (self antIconNamed: #checkCircle style: AntDesignIconsStyle outlined) identicalTo: (AntDesignIconsLibrary name: #checkCircle) form.
+	self deny: (self antOutlinedIconNamed: #checkCircle) identicalTo: filledCheckCircleIcon.
+	self deny: (self antIconNamed: #checkCircle style: #outlined) identicalTo: filledCheckCircleIcon.
+	self deny: (self antIconNamed: #checkCircle style: AntDesignIconsStyle outlined) identicalTo: filledCheckCircleIcon.
 	
-	self deny: (self antIconNamed: #checkCircle style: #twoTone) identicalTo: (AntDesignIconsLibrary name: #checkCircle) form.
-	self deny: (self antIconNamed: #checkCircle style: AntDesignIconsStyle twoTone) identicalTo: (AntDesignIconsLibrary name: #checkCircle) form
+	self deny: (self antTwoToneIconNamed: #checkCircle) identicalTo: filledCheckCircleIcon.
+	self deny: (self antIconNamed: #checkCircle style: #twoTone) identicalTo: filledCheckCircleIcon.
+	self deny: (self antIconNamed: #checkCircle style: AntDesignIconsStyle twoTone) identicalTo: filledCheckCircleIcon.
+	
+	outlinedCheckCircleIcon := (AntDesignIconsLibrary name: #checkCircle style: #outlined) form.
+	
+	self assert: (self antOutlinedIconNamed: #checkCircle) identicalTo: outlinedCheckCircleIcon.
+	self assert: (self antIconNamed: #checkCircle style: #outlined) identicalTo: outlinedCheckCircleIcon.
+	self assert: (self antIconNamed: #checkCircle style: AntDesignIconsStyle outlined) identicalTo: outlinedCheckCircleIcon.
 ]
 
-{ #category : #running }
+{ #category : #tests }
+AntDesignIconsLibraryTest >> testExists [
+
+	| iconDescription |
+	iconDescription := AntDesignIconsLibrary new.
+	iconDescription name: #checkCircle.
+	self assert: iconDescription exists.
+	
+	iconDescription := AntDesignIconsLibrary new.
+	iconDescription name: #checkCircleNotExists.
+	self deny: iconDescription exists.
+]
+
+{ #category : #tests }
 AntDesignIconsLibraryTest >> testGetAndCacheIcon [
 	| icon |
 
@@ -127,13 +151,13 @@ AntDesignIconsLibraryTest >> testGetAndCacheIcon [
 		equals: AntDesignIconsLibrary currentThemeIcons notFound
 ]
 
-{ #category : #running }
+{ #category : #tests }
 AntDesignIconsLibraryTest >> testLibraryName [
 
 	self assert: AntDesignIconsLibrary libraryName equals: 'Ant Design icons'
 ]
 
-{ #category : #running }
+{ #category : #tests }
 AntDesignIconsLibraryTest >> testNameWithSymbolOrString [
 	| iconA iconB |
 
@@ -144,7 +168,7 @@ AntDesignIconsLibraryTest >> testNameWithSymbolOrString [
 	self assert: iconA equals: iconB.
 ]
 
-{ #category : #running }
+{ #category : #tests }
 AntDesignIconsLibraryTest >> testNotFoundIcon [
 
 	self
@@ -152,7 +176,22 @@ AntDesignIconsLibraryTest >> testNotFoundIcon [
 		equals: AntDesignIconsLibrary currentThemeIcons notFound
 ]
 
-{ #category : #running }
+{ #category : #tests }
+AntDesignIconsLibraryTest >> testRasterImageFile [
+
+	| iconDescription file |
+	iconDescription := AntDesignIconsLibrary new.
+	iconDescription name: #checkCircle.
+	file := iconDescription rasterImageFile.
+	self assert: file isNil.
+
+	iconDescription := AntDesignIconsLibrary new.
+	iconDescription name: #checkCircleNotExists.
+	file := iconDescription vectorialImageFile.
+	self assert: file isNil.
+]
+
+{ #category : #tests }
 AntDesignIconsLibraryTest >> testReset [
 
 	| themeIcons |
@@ -162,4 +201,21 @@ AntDesignIconsLibraryTest >> testReset [
 	self
 		deny: AntDesignIconsLibrary currentThemeIcons
 		identicalTo: themeIcons
+]
+
+{ #category : #tests }
+AntDesignIconsLibraryTest >> testVectorialImageFile [
+
+	| iconDescription file |
+	iconDescription := AntDesignIconsLibrary new.
+	iconDescription name: #checkCircle.
+	file := iconDescription vectorialImageFile.
+	self assert: file notNil.
+	self assert: file exists.
+	self assert: file basename equals: 'check-circle.svg'.
+
+	iconDescription := AntDesignIconsLibrary new.
+	iconDescription name: #checkCircleNotExists.
+	file := iconDescription vectorialImageFile.
+	self assert: file isNil.
 ]

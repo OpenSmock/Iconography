@@ -154,6 +154,18 @@ SmockAbstractIconsLibrary >> buildSymbol [
 	^ self name asSymbol
 ]
 
+{ #category : #testing }
+SmockAbstractIconsLibrary >> cachedForm [
+
+	| symbol form |
+	symbol := self buildSymbol.
+	form := self themeIcons iconNamed: symbol.
+	
+	form ifNil:[ ^ nil ].
+	form == self themeIcons notFound ifTrue:[ ^ nil ]. 
+	^ form
+]
+
 { #category : #private }
 SmockAbstractIconsLibrary >> downloadAsRaster: mustBeCached [
 	"Download an icon into a Form (raster image) and cache it if needed"
@@ -179,19 +191,27 @@ SmockAbstractIconsLibrary >> downloadAsRasterFromDirectory: aDirectory [
 	^ nil	
 ]
 
+{ #category : #testing }
+SmockAbstractIconsLibrary >> exists [ 
+	"Test if the icon exists in the library, icon can be cached, not already cached but present in a file directory or available online"
+	
+	"First test : is icon already cached ?"
+	self isCachedForm ifTrue:[ ^ true ].
+	
+	"Second test : is icon on directory file ?"
+	((self rasterImageFile notNil and:[self rasterImageFile exists]) 
+		or:[(self vectorialImageFile notNil and:[self vectorialImageFile exists])]) ifTrue:[ ^ true ].
+
+	^ false
+]
+
 { #category : #icons }
 SmockAbstractIconsLibrary >> form [
 
-	| symbol form |
-	symbol := self buildSymbol.
-	form := self themeIcons iconNamed: symbol.
-	
-	(form isNil or:[form == self themeIcons notFound]) ifTrue:[ | downloadedForm |
-		downloadedForm := self downloadAsRaster: true.
-		^ downloadedForm ifNil:[ ^ form ]
-	].
-	
-	^ form
+	| downloadedForm |
+	self cachedForm ifNotNil:[ :form | ^ form ].
+	downloadedForm := self downloadAsRaster: true.
+	^ downloadedForm ifNil:[ self themeIcons notFound ]
 ]
 
 { #category : #accessing }
@@ -204,6 +224,16 @@ SmockAbstractIconsLibrary >> iconSize [
 SmockAbstractIconsLibrary >> iconSize: anObject [
 
 	iconSize := anObject
+]
+
+{ #category : #testing }
+SmockAbstractIconsLibrary >> isCachedForm [
+
+	| symbol form |
+	symbol := self buildSymbol.
+	form := self themeIcons iconNamed: symbol.
+	
+	^ (form notNil and:[form ~= self themeIcons notFound])
 ]
 
 { #category : #accessing }
@@ -234,6 +264,12 @@ SmockAbstractIconsLibrary >> name: anObject [
 SmockAbstractIconsLibrary >> pngExtensionFilter [
 
 	^ '*png'
+]
+
+{ #category : #accessing }
+SmockAbstractIconsLibrary >> rasterImageFile [
+
+	^ self shouldBeImplemented
 ]
 
 { #category : #accessing }
@@ -275,4 +311,10 @@ SmockAbstractIconsLibrary >> svgExtensionFilter [
 SmockAbstractIconsLibrary >> themeIcons [
 
 	^ self class currentThemeIcons
+]
+
+{ #category : #accessing }
+SmockAbstractIconsLibrary >> vectorialImageFile [
+
+	^ self shouldBeImplemented
 ]
