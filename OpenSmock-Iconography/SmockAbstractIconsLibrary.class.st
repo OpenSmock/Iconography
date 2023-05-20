@@ -148,6 +148,26 @@ SmockAbstractIconsLibrary class >> reset [
 	self defaultIconsLibraryClass _currentThemeIcons: nil
 ]
 
+{ #category : #export }
+SmockAbstractIconsLibrary >> asFormSerializationSelector [
+	"Return the selector in case of Form storage in a Class"
+	
+	| selector |
+	
+	style := self style.
+	name := self name.
+	
+	"build icon accessor"	
+	selector := name copy asString, (style ifNotNil:[ | formattedStyle | 
+		formattedStyle := style copy asString.
+		formattedStyle at: 1 put: (formattedStyle first asUppercase).
+		formattedStyle
+	]).
+	selector at: 1 put: (selector first asUppercase).
+
+	^ ('icon', selector) asValidSelector
+]
+
 { #category : #accessing }
 SmockAbstractIconsLibrary >> buildSymbol [
 
@@ -285,8 +305,22 @@ SmockAbstractIconsLibrary >> scale: anObject [
 ]
 
 { #category : #export }
-SmockAbstractIconsLibrary >> serializeAsForm: aClass [
-	"Serialize an icon as a Form into a Class"
+SmockAbstractIconsLibrary >> serializeAsForm: aClass maxWidth: aMaxWidth maxHeight: aMaxHeight [
+	"Serialize an icon as a Form into a Class and return the generated selector"
+	
+	| selector |
+	
+	(aMaxWidth isNil or:[aMaxWidth <= 0]) ifTrue:[ ^ nil ].
+	(aMaxHeight isNil or:[aMaxHeight <= 0]) ifTrue:[ ^ nil ].
+
+	selector := (self asFormSerializationSelector asString, aMaxWidth asString, 'x', aMaxHeight asString) asValidSelector.
+	
+	"Don't override existing accessor"
+	(aClass respondsTo: selector) ifTrue:[ ^ selector ].
+	
+	self flag:'labordep : todo serialization here'.
+	
+	^ selector
 ]
 
 { #category : #accessing }

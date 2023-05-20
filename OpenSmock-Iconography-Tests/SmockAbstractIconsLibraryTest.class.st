@@ -67,15 +67,18 @@ SmockAbstractIconsLibraryTest >> testIsCachedForm [
 ]
 
 { #category : #tests }
-SmockAbstractIconsLibraryTest >> testSerializeAsForm [
+SmockAbstractIconsLibraryTest >> testSerializeAsFormMaxWidthMaxHeight [
 
 	"Use an existing library to serialize an icon as a form into a test class"
-	| iconDescription |
+	| iconDescription symbol |
 	iconDescription := AntDesignIconsLibrary new.
-	
-	"needed properties to store as image : name, style and size"
-	iconDescription name: #checkCircle; style: AntDesignIconsStyle filled; iconSize: 32@32.
-	
-	"test if the form is found"
+	iconDescription name: #checkCircle; style: AntDesignIconsStyle filled.
+	"test if the form is found before serialization"
 	self assert: iconDescription exists.
+	"test if the class cannot contains the icon selector"
+	self deny: (SmockTestIconExport respondsTo: #iconCheckCircleFilled32x32).
+	
+	"serialize into a test Class"
+	symbol := iconDescription serializeAsForm: SmockTestIconExport maxWidth: 32 maxHeight: 32.
+	self assert: symbol equals: #iconCheckCircleFilled32x32.
 ]
