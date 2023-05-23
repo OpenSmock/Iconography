@@ -68,7 +68,7 @@ MaterialDesignIcons4Library >> initialize [
 
 { #category : #initialization }
 MaterialDesignIcons4Library >> rasterImageFile [ 
-	| pngDir directory |
+	| pngDir directory width sizeDirectory |
 	self flag:'labordep : temporary, we get the default scale and size of the the icon'.
 
 	directory := self libraryDirectory ifNil:[ ^ nil ].
@@ -77,11 +77,24 @@ MaterialDesignIcons4Library >> rasterImageFile [
 	pngDir := self pngDirectoryFrom: directory.
 	pngDir exists ifFalse: [ ^ nil ].
 
+	"Considere the requested size"
+	sizeDirectory := '18dp'.
+	width := 18.
+	iconSize ifNotNil: [width := (self iconSize x > self iconSize y) ifTrue:[self iconSize x] ifFalse:[self iconSize y]].
+	width > 18 ifTrue:[
+		width <= 24 
+			ifTrue:[sizeDirectory := '24dp']
+			ifFalse:[width <= 36 
+							ifTrue:[sizeDirectory := '36dp'] 
+							ifFalse:[sizeDirectory := '48dp']
+			].
+	].
+
 	pngDir directories do: [ :d |
 		d directories do: [ :d2 |
 			d2 basename = self name ifTrue: [
 				| iconDir |
-				iconDir := (self styleDirectoryFrom: d2) / '18dp' / '1x'.
+				iconDir := (self styleDirectoryFrom: d2) / sizeDirectory / '1x'.
 				iconDir exists ifTrue: [
 					| files |
 					files := iconDir filesMatching: self pngExtensionFilter.
