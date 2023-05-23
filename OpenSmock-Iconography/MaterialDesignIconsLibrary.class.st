@@ -65,8 +65,9 @@ MaterialDesignIconsLibrary class >> twoToneThemeIcons [
 
 { #category : #private }
 MaterialDesignIconsLibrary >> pngDirectoryFrom: aDirectory [
+	"This function return the location of PNG icons from the root directory specified in the settings"
 
-	^ aDirectory / 'png'.
+	^ aDirectory / 'png'
 ]
 
 { #category : #private }
@@ -79,6 +80,13 @@ MaterialDesignIconsLibrary >> styleDirectoryFrom: aDirectory [
 	(self style = MaterialDesignIconsStyle twoTone) ifTrue:[^ aDirectory / 'materialiconstwotone'].
 	
 	^ aDirectory / 'materialicons'
+]
+
+{ #category : #private }
+MaterialDesignIconsLibrary >> svgDirectoryFrom: aDirectory [
+	"This function return the location of svg source from the root directory specified in the settings"
+
+	^ aDirectory / 'src'
 ]
 
 { #category : #private }
