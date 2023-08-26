@@ -208,8 +208,15 @@ SmockAbstractIconsLibrary >> exists [
 { #category : #icons }
 SmockAbstractIconsLibrary >> form [
 
-	| downloadedForm |
-	self cachedForm ifNotNil:[ :form | ^ form ].
+	| downloadedForm cachedForm |
+	cachedForm := self cachedForm.
+	cachedForm ifNotNil:[ :f |
+		"In case of no specified size, return the cached form" 
+		self iconSize ifNil:[ ^ f ].
+		
+		"In case of specific size, check if the image is bigger than the cache image and redownload it if necessary, then return the cached form"
+		(f width < self iconSize x and:[f height < self iconSize y]) ifFalse:[ ^ f ]. 
+	].
 	downloadedForm := self downloadAsRaster: true.
 	^ downloadedForm ifNil:[ self themeIcons notFound ]
 ]
@@ -321,7 +328,7 @@ SmockAbstractIconsLibrary >> serializeAsForm: aClass maxWidth: aMaxWidth maxHeig
 	selector ifNil:[ ^ nil ].
 	
 	"Don't override existing accessor"
-	(aClass respondsTo: selector) ifTrue:[ ^ selector ].
+	"(aClass respondsTo: selector) ifTrue:[ ^ selector ]."
 	
 	"Prepare Form"
 	form := self form.

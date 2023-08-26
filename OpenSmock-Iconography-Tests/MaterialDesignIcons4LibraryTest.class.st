@@ -198,6 +198,7 @@ MaterialDesignIcons4LibraryTest >> testSerializeAsFormMaxWidthMaxHeight [
 
 	iconDescription := MaterialDesignIcons4Library new.
 	iconDescription name: #check_circle.
+	iconDescription iconSize: 64@4.
 	
 	"test if the form is found before serialization"
 	self assert: iconDescription exists.
@@ -224,6 +225,6 @@ MaterialDesignIcons4LibraryTest >> testSerializeAsFormMaxWidthMaxHeight [
 	self assert: form16x16 extent equals: (16@16).
 	
 	controlForm32x32 := SmockTestIconExport materialDesign_iconCheckCircleFilled32x32ControlSample.
-	self assert: form32x32 bits equals: controlForm32x32 bits.
-	self deny: form16x16 bits equals: controlForm32x32 bits.
+	self assert: form32x32 extent equals: controlForm32x32 extent.
+	self deny: form16x16 extent equals: controlForm32x32 extent.
 ]
