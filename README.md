@@ -1,3 +1,5 @@
+[![License](https://img.shields.io/github/license/OpenSmock/Iconography.svg)](./LICENSE)
+
 # Iconography
 
 ![image](https://github.com/OpenSmock/Iconography/assets/49183340/836be8c3-6b11-4b49-90ac-d9a122cdbcab)
