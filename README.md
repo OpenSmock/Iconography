@@ -24,7 +24,7 @@ This project wrap `ThemeIcons` to provide common icons libraries. Each asked ico
 
 ### Installation
 
-To install Molecule on your Pharo image you can just execute the following script:
+To install Iconography on your Pharo image you can just execute the following script:
 
 ```smalltalk
 Metacello new
