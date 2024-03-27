@@ -4,9 +4,9 @@
 
 ![image](https://github.com/OpenSmock/Iconography/assets/49183340/836be8c3-6b11-4b49-90ac-d9a122cdbcab)
 
-Import, manage, get and store/cache icons into Pharo from standard icons libraries.
+Import, manage, get and store/cache icons into Pharo from standard icon libraries.
 
-This project provides support of icon libraries (Material Design icons, Ant Design icons, Awesome Font icons, etc.). These libraries provide multiple icons `themes` and `styles`, with a lot of icons (more than thousands) and with multiple sizes and colorization for each one. This project has the objective of easily offering management of icons and provides a simple way to use them. The other point is to provide a cache mechanism to get and cash only required Icons and not load every time every one of them. 
+This project provides support of icon libraries (Material Design icons, Ant Design icons, Awesome Font icons, etc.). These libraries provide multiple icons `themes` and `styles`, with a lot of icons (more than thousands) and with multiple sizes and colorization for each one. This project has the objective of easily offering management of icons and provides a simple way to use them. The other objective is to provide a cache mechanism to get and cash only required Icons and not load every one of them every time. 
 
 Currently supported libraries : 
 - Material Design Icons 4.0.0 - [https://github.com/google/material-design-icons](https://github.com/google/material-design-icons)
@@ -84,7 +84,7 @@ Unzip the archive in your computer :
 
 ![image](https://user-images.githubusercontent.com/49183340/229849591-2ca48e2e-d816-49dc-abf2-d32be1d856db.png)
 
-Setup the directory with the unziped directory with the dedicated settings section : 
+Set up the directory with the unzipped directory with the dedicated settings section : 
 
 ![image](https://user-images.githubusercontent.com/49183340/229849889-d8a3946a-070c-4fa2-b423-f49a63e8a9cd.png)
 
@@ -144,7 +144,7 @@ Download the code of the official github project as a ZIP (it contains the icons
 
 Unzip the archive on your computer.
 
-Setup the directory with the unziped directory with the dedicated settings section.
+Set up the directory with the unzipped directory with the dedicated settings section.
 
 There are three different ways to get an icon :
 
