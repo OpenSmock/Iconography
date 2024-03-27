@@ -6,13 +6,13 @@
 
 Import, manage, get and store/cache icons into Pharo from standard icons libraries.
 
-This project provides support of icon libraries (Material Design icons, Ant Design icons, Awesome Font icons, etc.). These libraries provide multiple icons `themes` and `styles`, with a lot of icons (more than thousands) and with multiple size and colorization for each one. This project has the objective of easily offering management of icons and provides a simple way to use them. The other point is to provide a cache mechanism to get and cash only required Icons and not load every time every one of them. 
+This project provides support of icon libraries (Material Design icons, Ant Design icons, Awesome Font icons, etc.). These libraries provide multiple icons `themes` and `styles`, with a lot of icons (more than thousands) and with multiple sizes and colorization for each one. This project has the objective of easily offering management of icons and provides a simple way to use them. The other point is to provide a cache mechanism to get and cash only required Icons and not load every time every one of them. 
 
 Currently supported libraries : 
 - Material Design Icons 4.0.0 - [https://github.com/google/material-design-icons](https://github.com/google/material-design-icons)
 - Ant Design Icons - [https://github.com/ant-design/ant-design-icons](https://github.com/ant-design/ant-design-icons)
 
-This project embed a `SmockIconsLibrary` used by us to store our project icons, if you have your own icons you can implement your own library class.
+This project embeds a `SmockIconsLibrary` used by us to store our project icons, if you have your own icons you can implement your own library class.
 
 This project can be used to easily generate some icon sets for your project (see export/serialize section).
 
