@@ -1,4 +1,4 @@
-name: 'Pharo 12 CI'
+name: 'Pharo 13 CI'
 
 on:
   push:
