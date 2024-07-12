@@ -1,0 +1,13 @@
+SmalltalkCISpec {
+  #loading : [
+    SCIMetacelloLoadSpec {
+      #baseline : 'OpenSmockIconography',
+      #platforms : [ #pharo ]
+    }
+  ],
+  #testing : {
+    #include : {
+      #packages : [ 'OpenSmock-Iconography*-Tests' ]
+    }
+  }
+}

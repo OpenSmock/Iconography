@@ -1,4 +1,7 @@
 [![License](https://img.shields.io/github/license/OpenSmock/Iconography.svg)](./LICENSE)
+[![Pharo 11 CI](https://github.com/OpenSmock/Iconography/actions/workflows/Pharo11CI.yml/badge.svg)](https://github.com/OpenSmock/Iconography/actions/workflows/Pharo11CI.yml)
+[![Pharo 12 CI](https://github.com/OpenSmock/Iconography/actions/workflows/Pharo12CI.yml/badge.svg)](https://github.com/OpenSmock/Iconography/actions/workflows/Pharo12CI.yml)
+[![Pharo 13 CI](https://github.com/OpenSmock/Iconography/actions/workflows/Pharo13CI.yml/badge.svg)](https://github.com/OpenSmock/Iconography/actions/workflows/Pharo13CI.yml)
 
 # Iconography
 
