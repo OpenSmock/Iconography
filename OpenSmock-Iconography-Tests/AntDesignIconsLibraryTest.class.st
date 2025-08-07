@@ -105,32 +105,34 @@ AntDesignIconsLibraryTest >> tearDown [
 { #category : #tests }
 AntDesignIconsLibraryTest >> testAntDesignIconNamed [
 
-	self assert: (self antIconNamed: #checkCircle) identicalTo: (AntDesignIconsLibrary name: #checkCircle) form.
+	self
+		assert: (self antIconNamed: #checkCircle) bits
+		equals: (AntDesignIconsLibrary name: #checkCircle) form bits
 ]
 
 { #category : #tests }
 AntDesignIconsLibraryTest >> testAntDesignIconNamedStyle [
 
 	| filledCheckCircleIcon outlinedCheckCircleIcon |
-	filledCheckCircleIcon := (AntDesignIconsLibrary name: #checkCircle) form.
+	filledCheckCircleIcon := (AntDesignIconsLibrary name: #checkCircle) form bits.
 
-	self assert: (self antFilledIconNamed: #checkCircle) identicalTo: filledCheckCircleIcon.
-	self assert: (self antIconNamed: #checkCircle style: #filled) identicalTo: filledCheckCircleIcon.
-	self assert: (self antIconNamed: #checkCircle style: AntDesignIconsStyle filled) identicalTo: filledCheckCircleIcon.
+	self assert: (self antFilledIconNamed: #checkCircle) bits equals: filledCheckCircleIcon.
+	self assert: (self antIconNamed: #checkCircle style: #filled) bits equals: filledCheckCircleIcon.
+	self assert: (self antIconNamed: #checkCircle style: AntDesignIconsStyle filled) bits equals: filledCheckCircleIcon.
 	
-	self deny: (self antOutlinedIconNamed: #checkCircle) identicalTo: filledCheckCircleIcon.
-	self deny: (self antIconNamed: #checkCircle style: #outlined) identicalTo: filledCheckCircleIcon.
-	self deny: (self antIconNamed: #checkCircle style: AntDesignIconsStyle outlined) identicalTo: filledCheckCircleIcon.
+	self deny: (self antOutlinedIconNamed: #checkCircle) bits equals: filledCheckCircleIcon.
+	self deny: (self antIconNamed: #checkCircle style: #outlined) bits equals: filledCheckCircleIcon.
+	self deny: (self antIconNamed: #checkCircle style: AntDesignIconsStyle outlined) bits equals: filledCheckCircleIcon.
 	
-	self deny: (self antTwoToneIconNamed: #checkCircle) identicalTo: filledCheckCircleIcon.
-	self deny: (self antIconNamed: #checkCircle style: #twoTone) identicalTo: filledCheckCircleIcon.
-	self deny: (self antIconNamed: #checkCircle style: AntDesignIconsStyle twoTone) identicalTo: filledCheckCircleIcon.
+	self deny: (self antTwoToneIconNamed: #checkCircle) bits equals: filledCheckCircleIcon.
+	self deny: (self antIconNamed: #checkCircle style: #twoTone) bits equals: filledCheckCircleIcon.
+	self deny: (self antIconNamed: #checkCircle style: AntDesignIconsStyle twoTone) bits equals: filledCheckCircleIcon.
 	
-	outlinedCheckCircleIcon := (AntDesignIconsLibrary name: #checkCircle style: #outlined) form.
+	outlinedCheckCircleIcon := (AntDesignIconsLibrary name: #checkCircle style: #outlined) form bits.
 	
-	self assert: (self antOutlinedIconNamed: #checkCircle) identicalTo: outlinedCheckCircleIcon.
-	self assert: (self antIconNamed: #checkCircle style: #outlined) identicalTo: outlinedCheckCircleIcon.
-	self assert: (self antIconNamed: #checkCircle style: AntDesignIconsStyle outlined) identicalTo: outlinedCheckCircleIcon.
+	self assert: (self antOutlinedIconNamed: #checkCircle) bits equals: outlinedCheckCircleIcon.
+	self assert: (self antIconNamed: #checkCircle style: #outlined) bits equals: outlinedCheckCircleIcon.
+	self assert: (self antIconNamed: #checkCircle style: AntDesignIconsStyle outlined) bits equals: outlinedCheckCircleIcon.
 ]
 
 { #category : #tests }
@@ -152,17 +154,17 @@ AntDesignIconsLibraryTest >> testGetAndCacheIcon [
 
 	self
 		assert:
-		(AntDesignIconsLibrary currentThemeIcons iconNamed: #checkCircle) form
-		equals: AntDesignIconsLibrary currentThemeIcons notFound.
+		(AntDesignIconsLibrary currentThemeIcons iconNamed: #checkCircle) form bits
+		equals: AntDesignIconsLibrary currentThemeIcons notFound bits.
 
-	icon := (AntDesignIconsLibrary name: #checkCircle) form.
+	icon := (AntDesignIconsLibrary name: #checkCircle) form bits.
 	self
 		deny: icon
-		equals: AntDesignIconsLibrary currentThemeIcons notFound.
+		equals: AntDesignIconsLibrary currentThemeIcons notFound bits.
 	self
 		deny:
-		(AntDesignIconsLibrary currentThemeIcons iconNamed: #checkCircle) form
-		equals: AntDesignIconsLibrary currentThemeIcons notFound
+		(AntDesignIconsLibrary currentThemeIcons iconNamed: #checkCircle) form bits
+		equals: AntDesignIconsLibrary currentThemeIcons notFound bits
 ]
 
 { #category : #tests }
@@ -175,10 +177,10 @@ AntDesignIconsLibraryTest >> testLibraryName [
 AntDesignIconsLibraryTest >> testNameWithSymbolOrString [
 	| iconA iconB |
 
-	iconA := (AntDesignIconsLibrary name: 'checkSquare') form.
-	iconB := (AntDesignIconsLibrary name: #'checkSquare') form.
+	iconA := (AntDesignIconsLibrary name: 'checkSquare') form bits.
+	iconB := (AntDesignIconsLibrary name: #'checkSquare') form bits.
 	
-	self deny: iconA equals: AntDesignIconsLibrary currentThemeIcons notFound.
+	self deny: iconA equals: AntDesignIconsLibrary currentThemeIcons notFound bits.
 	self assert: iconA equals: iconB.
 ]
 
@@ -186,8 +188,8 @@ AntDesignIconsLibraryTest >> testNameWithSymbolOrString [
 AntDesignIconsLibraryTest >> testNotFoundIcon [
 
 	self
-		assert: (AntDesignIconsLibrary name: #test_NotFoundIcon) form
-		equals: AntDesignIconsLibrary currentThemeIcons notFound
+		assert: (AntDesignIconsLibrary name: #test_NotFoundIcon) form bits
+		equals: AntDesignIconsLibrary currentThemeIcons notFound bits
 ]
 
 { #category : #tests }

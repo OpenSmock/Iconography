@@ -162,6 +162,8 @@ SmockAbstractIconsLibrary >> cachedForm [
 	form := self themeIcons iconNamed: symbol.
 	
 	form ifNil:[ ^ nil ].
+	form bits = self themeIcons notFoundIcon bits ifTrue:[ ^ nil ].
+	
 	form == self themeIcons notFound ifTrue:[ ^ nil ]. 
 	^ form
 ]
@@ -262,7 +264,7 @@ SmockAbstractIconsLibrary >> isCachedForm [
 	symbol := self buildSymbol.
 	form := self themeIcons iconNamed: symbol.
 	
-	^ (form notNil and:[form ~= self themeIcons notFound])
+	^ (form notNil and:[form bits ~= self themeIcons notFound bits])
 ]
 
 { #category : #accessing }
