@@ -26,8 +26,8 @@ SmockGeneralIconsLibraryTest >> testInstallEmbeddedIcon [
 
 	| form |
 	self
-		assert: (SmockTestIconsLibrary name: #myIcon) form
-		equals: SmockTestIconsLibrary currentThemeIcons notFound.
+		assert: (SmockTestIconsLibrary name: #myIcon) form bits
+		equals: SmockTestIconsLibrary currentThemeIcons notFound bits.
 
 	form := Form extent: 10 @ 10.
 	SmockTestIconsLibrary installEmbeddedIcon: form name: #myIcon.

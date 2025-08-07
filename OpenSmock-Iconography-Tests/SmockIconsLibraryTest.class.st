@@ -41,8 +41,8 @@ SmockIconsLibraryTest >> testLibraryName [
 SmockIconsLibraryTest >> testNotFoundIcon [
 
 	self
-		assert: (SmockIconsLibrary name: #test_NotFoundIcon) form
-		equals: SmockIconsLibrary currentThemeIcons notFound
+		assert: (SmockIconsLibrary name: #test_NotFoundIcon) form bits
+		equals: SmockIconsLibrary currentThemeIcons notFound bits
 ]
 
 { #category : #tests }
