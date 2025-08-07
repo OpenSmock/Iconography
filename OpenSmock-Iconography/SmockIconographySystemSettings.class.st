@@ -91,9 +91,16 @@ SmockIconographySystemSettings class >> materialDesignLibrarySettingOn: aBuilder
 { #category : #settings }
 SmockIconographySystemSettings class >> smockWorkshopSettingOn: aBuilder [
 	<systemsettings>
+	
+	| parent |
+	parent := #smockWorkshop.
+
+	(self class packageOrganizer hasPackage: 'OpenSmock-IDE') ifFalse:[ 
+		parent := #tools.
+	].
 
 	"parent can not exists"
 	(aBuilder group: #smockIconsLibrary)
 		label: 'Icons Library';
-		parent: #smockWorkshop.
+		parent: parent.
 ]
